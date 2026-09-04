@@ -3,15 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- GitHub Pages can't send security headers, so the policy lives here. Nothing loads from any origin but this one; no inline script or style. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
   <title>Zarif Fida Chowdhury</title>
-  <meta name="description" content="Zarif Fida Chowdhury — software engineer in Cincinnati, Ohio. B.S. Computer Science, Miami University, 2026. Full-stack work with the security done up front; open to new-grad roles.">
+  <meta name="description" content="Zarif Fida Chowdhury — software engineer in Oxford, Ohio. B.S. Computer Science, Miami University, 2026. Full-stack work with the security done up front; open to new-grad roles.">
   <meta name="author" content="Zarif Fida Chowdhury">
   <meta name="theme-color" content="#f1f2f0">
   <link rel="canonical" href="https://zariffidachowdhury.github.io/">
 
   <meta property="og:type" content="profile">
   <meta property="og:title" content="Zarif Fida Chowdhury">
-  <meta property="og:description" content="Software engineer in Cincinnati, Ohio. B.S. Computer Science, Miami University, 2026. Full-stack work with the security done up front; open to new-grad roles.">
+  <meta property="og:description" content="Software engineer in Oxford, Ohio. B.S. Computer Science, Miami University, 2026. Full-stack work with the security done up front; open to new-grad roles.">
   <meta property="og:url" content="https://zariffidachowdhury.github.io/">
   <meta property="og:image" content="https://zariffidachowdhury.github.io/img/og.png">
   <meta property="og:image:width" content="1200">
@@ -19,7 +21,7 @@
   <meta property="og:image:alt" content="Zarif Fida Chowdhury — software engineer, the security work done up front.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Zarif Fida Chowdhury">
-  <meta name="twitter:description" content="Software engineer in Cincinnati, Ohio. B.S. Computer Science, Miami University, 2026.">
+  <meta name="twitter:description" content="Software engineer in Oxford, Ohio. B.S. Computer Science, Miami University, 2026.">
   <meta name="twitter:image" content="https://zariffidachowdhury.github.io/img/og.png">
 
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
@@ -40,7 +42,7 @@
     "jobTitle": "Software engineer",
     "email": "mailto:zariffidachowdhury@gmail.com",
     "alumniOf": { "@type": "CollegeOrUniversity", "name": "Miami University" },
-    "address": { "@type": "PostalAddress", "addressLocality": "Cincinnati", "addressRegion": "OH", "addressCountry": "US" },
+    "address": { "@type": "PostalAddress", "addressLocality": "Oxford", "addressRegion": "OH", "addressCountry": "US" },
     "sameAs": [
       "https://www.linkedin.com/in/zarif-fida-chowdhury/",
       "https://github.com/zariffidachowdhury"
@@ -67,18 +69,38 @@
 
   <main id="main">
 
-    <!-- Nameplate -->
-    <section class="nameplate wrap" id="top" aria-labelledby="name">
-      <p class="eyebrow">Software engineer · Cincinnati, Ohio</p>
-      <h1 id="name">Zarif Fida Chowdhury<span class="period" aria-hidden="true">.</span></h1>
-      <p class="deck">I build full-stack systems and do the security work up front — keys stay server-side, sessions are real, and input gets validated before it touches anything that matters.</p>
-      <p class="status">B.S. Computer Science, Miami University · August 2026<br>Open to new-grad roles in software, security, and AI</p>
-      <ul class="ports" aria-label="Links">
-        <li><a href="mailto:zariffidachowdhury@gmail.com">Email <span aria-hidden="true">↗</span></a></li>
-        <li><a href="https://github.com/zariffidachowdhury">GitHub <span aria-hidden="true">↗</span></a></li>
-        <li><a href="https://www.linkedin.com/in/zarif-fida-chowdhury/">LinkedIn <span aria-hidden="true">↗</span></a></li>
-        <li><a href="resume.pdf">Résumé (PDF) <span aria-hidden="true">↓</span></a></li>
-      </ul>
+    <!-- Title block: the header is a document-control block, the way a drawing carries its name, revision and status in a ruled box — not a poster. -->
+    <section class="titleblock wrap" id="top" aria-labelledby="name">
+      <div class="tb">
+        <div class="tb-main">
+          <p class="eyebrow">Software engineer · Oxford, Ohio</p>
+          <h1 id="name">Zarif Fida Chowdhury</h1>
+          <p class="deck">I build full-stack systems and do the security work up front — keys stay server-side, sessions are real, and input gets validated before it touches anything that matters.</p>
+        </div>
+        <dl class="tb-meta">
+          <div>
+            <dt>Degree</dt>
+            <dd>B.S. Computer Science, Miami University — August 2026</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd>Open to new-grad roles in software, security, and AI — on-site, hybrid, or remote</dd>
+          </div>
+          <div>
+            <dt>Reach</dt>
+            <dd class="tb-links">
+              <a href="mailto:zariffidachowdhury@gmail.com">Email <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/zariffidachowdhury">GitHub <span aria-hidden="true">↗</span></a>
+              <a href="https://www.linkedin.com/in/zarif-fida-chowdhury/">LinkedIn <span aria-hidden="true">↗</span></a>
+              <a href="resume.pdf">Résumé (PDF) <span aria-hidden="true">↓</span></a>
+            </dd>
+          </div>
+          <div>
+            <dt>Revision</dt>
+            <dd>2 — September 2026</dd>
+          </div>
+        </dl>
+      </div>
     </section>
 
     <!-- Selected work -->
@@ -87,7 +109,7 @@
         <p class="eyebrow" id="work-eyebrow">Selected work</p>
 
         <article aria-labelledby="capstone">
-          <h2 id="capstone">Capstone GPT<span class="period" aria-hidden="true">.</span></h2>
+          <h2 id="capstone">Capstone GPT</h2>
           <p class="pitch">A course-grounded assistant for Miami's Senior Design students. It answers from the syllabus and course materials, not the open internet.</p>
           <p class="qualifier">Built solo over the Spring 2026 semester — PHP 8, MySQL, plain JavaScript, and a Dify retrieval workflow.</p>
 
@@ -131,7 +153,7 @@
           </ul>
 
           <div class="note">
-            <p class="eyebrow eyebrow--quiet">Not claiming</p>
+            <p class="eyebrow eyebrow--quiet">Caveats</p>
             <p>No load testing beyond a classroom. Retrieval and embeddings run on Dify Cloud, so that layer isn't mine. The public repo is a sanitized re-upload; the working commit history lives on the university GitLab.</p>
           </div>
 
@@ -146,7 +168,7 @@
       <!-- Hands-on coursework: course code in the margin column, what was actually done on the right -->
       <div class="ledger-grid subsection" aria-labelledby="also-eyebrow">
         <p class="eyebrow" id="also-eyebrow">Also</p>
-        <p class="pitch" style="margin-bottom:0">Hands-on coursework.</p>
+        <p class="pitch pitch--tight">Hands-on coursework.</p>
         <ul class="rows full">
           <li class="row">
             <span class="label">CSE 386</span>
@@ -186,7 +208,7 @@
     <section class="section wrap" id="experience" aria-labelledby="exp-eyebrow">
       <div class="ledger-grid">
         <p class="eyebrow" id="exp-eyebrow">Experience</p>
-        <p class="pitch" style="margin-bottom:0">Two summers in Dhaka, one year on campus.</p>
+        <p class="pitch pitch--tight">Two summers in Dhaka, one year on campus.</p>
         <ul class="rows full">
           <li class="row">
             <span class="label">Oct 2025 — now</span>
@@ -225,8 +247,7 @@
         <p class="eyebrow" id="about-eyebrow">About</p>
         <div class="about">
           <figure class="plate plate--portrait">
-              <img src="img/headshot.jpg" width="600" height="600" alt="Zarif Fida Chowdhury at his Miami University graduation." loading="lazy">
-            
+            <img src="img/headshot.jpg" width="600" height="600" alt="Zarif Fida Chowdhury at his Miami University graduation." loading="lazy">
           </figure>
           <div class="prose">
             <!-- CONFIRM: these two paragraphs are yours to edit — keep them plain and true -->
@@ -241,7 +262,7 @@
     <section class="section wrap" id="skills" aria-labelledby="tools-eyebrow">
       <div class="ledger-grid">
         <p class="eyebrow" id="tools-eyebrow">Tools</p>
-        <p class="pitch" style="margin-bottom:0">What I've used.</p>
+        <p class="pitch pitch--tight">What I've used.</p>
         <dl class="tools full">
           <div><dt>Languages</dt><dd>Python, Java, C++, C, PHP, JavaScript, SQL</dd></div>
           <div><dt>Security</dt><dd>OWASP Top 10, threat modeling, Burp Suite, Wireshark, tcpdump, Nmap, Metasploit, OpenSSL, Kali Linux, pfSense, Snort, Splunk</dd></div>
@@ -252,10 +273,10 @@
       </div>
     </section>
 
-    <!-- Reach -->
-    <section class="section wrap" id="contact" aria-labelledby="reach-eyebrow">
+    <!-- Contact -->
+    <section class="section wrap" id="contact" aria-labelledby="contact-eyebrow">
       <div class="ledger-grid">
-        <p class="eyebrow" id="reach-eyebrow">Reach</p>
+        <p class="eyebrow" id="contact-eyebrow">Contact</p>
         <div>
           <p class="reach-lead">Email is the fastest way.</p>
           <ul class="reach">
@@ -270,11 +291,91 @@
 
   </main>
 
+  <!-- Colophon, with the page's own integrity ledger. The rows and the manifest are generated by tools/integrity.py; run it after changing any file. -->
   <footer class="colophon">
     <div class="wrap">
-      <p>Hand-written HTML and CSS — no framework, no analytics, no cookies. Set in Source Serif 4, IBM Plex Sans and IBM Plex Mono.</p>
-      <p><a href="https://github.com/zariffidachowdhury/zariffidachowdhury.github.io">Source <span aria-hidden="true">↗</span></a><span class="sep" aria-hidden="true">·</span>Updated September 2026<span class="sep" aria-hidden="true">·</span>© 2026 Zarif Fida Chowdhury</p>
+      <div class="ledger-grid">
+        <p class="eyebrow eyebrow--quiet" id="integrity-eyebrow">Integrity</p>
+        <div>
+          <p class="col-lead">This page checks itself.</p>
+          <p class="col-text">Every file the page loads has a SHA-256 hash pinned in this HTML. Your browser re-hashes each one as it arrives and compares; a mismatch would be reported here. GitHub Pages can't send security headers, so the Content-Security-Policy is a meta tag — it permits nothing from any other origin, no inline script, no inline style.</p>
+          <!-- integrity:start -->
+<ul class="audit" aria-label="Files this page loads, with their pinned SHA-256 hashes">
+  <li data-group="css">
+    <details>
+      <summary>Stylesheets — 2 files</summary>
+      <ul class="files">
+            <li data-file="css/site.css"><span>css/site.css</span><span class="hash">48239b494f96…c96046</span></li>
+            <li data-file="css/resume.css"><span>css/resume.css</span><span class="hash">d8bf672bf396…62c16b</span></li>
+      </ul>
+    </details>
+    <span class="audit-status">pinned</span>
+  </li>
+  <li data-group="fonts">
+    <details>
+      <summary>Fonts — 8 files</summary>
+      <ul class="files">
+            <li data-file="fonts/IBMPlexMono-Italic.woff2"><span>fonts/IBMPlexMono-Italic.woff2</span><span class="hash">0840095faae8…32e4e3</span></li>
+            <li data-file="fonts/IBMPlexMono-Medium.woff2"><span>fonts/IBMPlexMono-Medium.woff2</span><span class="hash">01d285447409…6e8e22</span></li>
+            <li data-file="fonts/IBMPlexMono-Regular.woff2"><span>fonts/IBMPlexMono-Regular.woff2</span><span class="hash">08949f728dc5…c380f7</span></li>
+            <li data-file="fonts/IBMPlexSans-Variable-Italic.woff2"><span>fonts/IBMPlexSans-Variable-Italic.woff2</span><span class="hash">4363757d2695…cf14c1</span></li>
+            <li data-file="fonts/IBMPlexSans-Variable.woff2"><span>fonts/IBMPlexSans-Variable.woff2</span><span class="hash">e2291e842cf5…859470</span></li>
+            <li data-file="fonts/SourceSerif4-Variable-Italic.woff2"><span>fonts/SourceSerif4-Variable-Italic.woff2</span><span class="hash">96e639320972…b88f89</span></li>
+            <li data-file="fonts/SourceSerif4-Variable.woff2"><span>fonts/SourceSerif4-Variable.woff2</span><span class="hash">f2ea9c12d2fe…f9f9e0</span></li>
+            <li data-file="fonts/fonts.css"><span>fonts/fonts.css</span><span class="hash">d8f85ef2a6c1…5ce4ea</span></li>
+      </ul>
+    </details>
+    <span class="audit-status">pinned</span>
+  </li>
+  <li data-group="img">
+    <details>
+      <summary>Images — 9 files</summary>
+      <ul class="files">
+            <li data-file="img/apple-touch-icon.png"><span>img/apple-touch-icon.png</span><span class="hash">338493057909…dc9065</span></li>
+            <li data-file="img/capstone-chat-800.jpg"><span>img/capstone-chat-800.jpg</span><span class="hash">9c3f32429713…00e33a</span></li>
+            <li data-file="img/capstone-chat.jpg"><span>img/capstone-chat.jpg</span><span class="hash">305c4e89c47f…f7a663</span></li>
+            <li data-file="img/capstone-dashboard-800.jpg"><span>img/capstone-dashboard-800.jpg</span><span class="hash">05ff0324e42f…5d4350</span></li>
+            <li data-file="img/capstone-dashboard.jpg"><span>img/capstone-dashboard.jpg</span><span class="hash">4c6d1e06c79e…c12884</span></li>
+            <li data-file="img/favicon-32.png"><span>img/favicon-32.png</span><span class="hash">523322dd23ac…461348</span></li>
+            <li data-file="img/favicon.svg"><span>img/favicon.svg</span><span class="hash">5ae76d281839…f54802</span></li>
+            <li data-file="img/headshot.jpg"><span>img/headshot.jpg</span><span class="hash">17c830d10930…ffa0d1</span></li>
+            <li data-file="img/og.png"><span>img/og.png</span><span class="hash">7e38b93c94d8…1525b7</span></li>
+      </ul>
+    </details>
+    <span class="audit-status">pinned</span>
+  </li>
+  <li data-group="js">
+    <details>
+      <summary>Script — 1 file</summary>
+      <ul class="files">
+            <li data-file="js/audit.js"><span>js/audit.js</span><span class="hash">10c1705810bf…0356ee</span></li>
+      </ul>
+    </details>
+    <span class="audit-status">pinned</span>
+  </li>
+  <li data-group="resume">
+    <details>
+      <summary>Résumé — 2 files</summary>
+      <ul class="files">
+            <li data-file="resume.pdf"><span>resume.pdf</span><span class="hash">bf7617e3397b…728067</span></li>
+            <li data-file="resume.html"><span>resume.html</span><span class="hash">c522be191e3d…e3b60c</span></li>
+      </ul>
+    </details>
+    <span class="audit-status">pinned</span>
+  </li>
+</ul>
+<!-- integrity:end -->
+          <p class="rows-note" id="audit-summary">JavaScript is off, so nothing was re-checked. The hashes above are what's pinned; compare by hand with <code>sha256sum</code>.</p>
+        </div>
+      </div>
+      <p class="col-foot">Hand-written HTML and CSS — no framework, no analytics, no cookies. Set in Source Serif 4, IBM Plex Sans and IBM Plex Mono.</p>
+      <!-- CONFIRM: the revision note is a true story; keep it or cut it -->
+      <p class="col-foot">Revision 2, September 2026 — rebuilt by hand after two friends said the last one looked machine-made.</p>
+      <p class="col-foot"><a href="https://github.com/zariffidachowdhury/zariffidachowdhury.github.io">Source <span aria-hidden="true">↗</span></a><span class="sep" aria-hidden="true">·</span><a href="https://github.com/zariffidachowdhury/zariffidachowdhury.github.io/blob/main/tools/integrity.py">integrity.py <span aria-hidden="true">↗</span></a><span class="sep" aria-hidden="true">·</span>© 2026 Zarif Fida Chowdhury</p>
     </div>
   </footer>
+
+  <script type="application/json" id="integrity-manifest">{"css/resume.css":"d8bf672bf3967a4ddac1a4dd5e414fea4f7599263d42c1adac5c92b09862c16b","css/site.css":"48239b494f96471ed22edd4e05ca8ddcca8af29c3f66ab453ccd269e85c96046","fonts/IBMPlexMono-Italic.woff2":"0840095faae86403735a8c04014b72cb29e7923646b222b360b7e8252932e4e3","fonts/IBMPlexMono-Medium.woff2":"01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22","fonts/IBMPlexMono-Regular.woff2":"08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7","fonts/IBMPlexSans-Variable-Italic.woff2":"4363757d2695c7633f98472855849f7c30528eba869d7968ee35b58c87cf14c1","fonts/IBMPlexSans-Variable.woff2":"e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470","fonts/SourceSerif4-Variable-Italic.woff2":"96e6393209728ab93c334ae739af8a040cd2006c82e8614d6465a8084db88f89","fonts/SourceSerif4-Variable.woff2":"f2ea9c12d2fe9bd3a9589b02ad2c0909da88f30938c91adc838c4f4098f9f9e0","fonts/fonts.css":"d8f85ef2a6c1f43d5f604a75baa9fa7ba27b39d11472e8a08202db19555ce4ea","img/apple-touch-icon.png":"338493057909e15769049db1bf2d70f278daa191e6bff9656e429b1d20dc9065","img/capstone-chat-800.jpg":"9c3f324297132e1400beec01e62a595d5f0eaea04be745244789c74b3100e33a","img/capstone-chat.jpg":"305c4e89c47f3be19a3953542e750a0e1b77ca0d3fd5e8f3b39c5a3b1cf7a663","img/capstone-dashboard-800.jpg":"05ff0324e42f7c1cc876cb56f98174e10c99bd48398081a75e215014355d4350","img/capstone-dashboard.jpg":"4c6d1e06c79ebbe8bb21148583d9d578bb7518d5e0f5eab2dfc0ec4c86c12884","img/favicon-32.png":"523322dd23ac1cf569515d10802ad4bd4b24a0c265780c6c7f8c9b814b461348","img/favicon.svg":"5ae76d2818390198a7c77c983fed9c3525c7ea72313fe4a0acaee24935f54802","img/headshot.jpg":"17c830d10930e27072d01946438caee9a21f072e67a0cb95b1855fc566ffa0d1","img/og.png":"7e38b93c94d8dc94451b5d4d24f661fb1b872bb286201e48e15a65ada21525b7","js/audit.js":"10c1705810bfc08dc140c105571fe3a07c58900f434d396689c7b1b4ab0356ee","resume.html":"c522be191e3d2f17edc5b6bff4254759e948aefe9eb8c0be0794438a8ae3b60c","resume.pdf":"bf7617e3397b6cf4f030f3aebaba17385d162ce4f35b12b88dcd712e92728067"}</script>
+  <script src="js/audit.js" defer></script>
 </body>
 </html>
