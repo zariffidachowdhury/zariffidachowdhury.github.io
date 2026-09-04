@@ -1,0 +1,273 @@
+/* resume.css — the one-page résumé sheet. Same tokens as site.css; denser type.
+   Screen: a paper ground with the sheet centred on it. Print: the sheet *is* the page. */
+
+:root {
+  --paper:   #f1f2f0;
+  --paper-2: #f8f9f7;
+  --ink:     #000000;   /* résumé is all black: prints clean, parses clean */
+  --ink-2:   #000000;
+  --sheet:   #ffffff;
+  --rule:    #d3d6d1;
+  --rule-2:  #e5e8e3;
+  --ox:      #7a1f2b;
+  --ox-2:    #5f1721;
+  --ox-tint: #f0e4e5;
+  --radius:  0;
+
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:  "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Fit knobs. Tighten in this order if the PDF spills: leading, section gap, page margin. */
+  --fs:      10pt;     /* body */
+  --lh:      1.2;      /* body leading */
+  --fs-mono: 8.5pt;    /* eyebrows, dates, contact line */
+  --gap-section: 6pt;  /* between sections */
+  --gap-entry:   3pt;  /* between roles inside a section */
+  --page-margin-v: 0.55in;
+  --page-margin-h: 0.6in;
+
+  color-scheme: light;
+}
+
+@page {
+  size: Letter;
+  margin: 0.55in 0.6in;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--paper); }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--fs);
+  line-height: var(--lh);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--ox-tint); }
+
+:focus-visible { outline: 2px solid var(--ox); outline-offset: 3px; }
+
+/* ---- Skip link + screen-only top bar ---------------------------------- */
+
+.skip {
+  position: absolute;
+  left: 8px; top: -100px;
+  padding: 6px 10px;
+  background: var(--paper-2);
+  color: var(--ox);
+  font: 500 13px/1 var(--mono);
+  border: 1px solid var(--rule);
+}
+.skip:focus { top: 8px; z-index: 2; }
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;            /* on a narrow phone the download link drops to a second row, whole */
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 24px;
+  padding: 11px clamp(16px, 4vw, 32px);
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1;
+}
+.bar a {
+  white-space: nowrap;
+  color: var(--ox);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .18em;
+  transition: text-decoration-color .15s, color .15s;
+}
+.bar a:hover { color: var(--ox-2); text-decoration-thickness: 2px; }
+
+/* ---- The sheet ---------------------------------------------------------- */
+
+.sheet {
+  max-width: 8.5in;
+  width: 100%;
+  margin: 28px auto 56px;
+  padding: var(--page-margin-v) var(--page-margin-h);
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+@media (max-width: 640px) {
+  .bar { font-size: 12px; }
+  .sheet { margin: 12px auto 40px; padding: 22px 18px; }
+  /* Contact handles wrap as whole items instead of overflowing the sheet. */
+  .contact { display: flex; flex-wrap: wrap; column-gap: 1em; }
+  .contact .sep, .contact br { display: none; }
+  .contact a, .row .org .mono { overflow-wrap: anywhere; }
+}
+
+/* Links inside the sheet read as text; they light up on hover and stay clickable in the PDF. */
+.sheet a { color: inherit; text-decoration: none; }
+.sheet a:hover {
+  color: var(--ox);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .18em;
+}
+
+/* ---- Header ------------------------------------------------------------- */
+
+.head { margin-bottom: var(--gap-section); }
+
+h1 {
+  margin: 0 0 4pt;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 26pt;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  font-optical-sizing: auto;
+}
+.period { color: inherit; }
+
+.contact {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  line-height: 1.5;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.sep { margin: 0 .45em; }
+
+/* Inline code and inline URLs are set in the mono face — never the browser's default `monospace`,
+   which would drag a system font (Liberation/DejaVu) into the PDF. */
+code, .mono {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  font-variant-numeric: tabular-nums;
+}
+code { color: var(--ink); }
+
+/* ---- Sections ----------------------------------------------------------- */
+
+section { margin-top: var(--gap-section); }
+section:first-of-type { margin-top: 0; }
+
+h2 {
+  margin: 0 0 2.5pt;
+  padding-bottom: 2pt;
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: var(--fs-mono);
+  line-height: 1;            /* uppercase mono, no descenders — the em box is enough */
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  break-after: avoid;
+}
+
+.sheet p { margin: 0; }
+.sheet p + p { margin-top: 2pt; }
+
+/* An entry: a title row (title left, date right) then optional meta line and bullets. */
+.entry { break-inside: avoid; }
+.entry + .entry { margin-top: var(--gap-entry); }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 12pt;
+}
+.row h3, .row .title {
+  margin: 0;
+  flex: 1 1 auto;
+  font-family: var(--sans);
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+}
+.row .org { font-weight: 400; color: var(--ink-2); }
+.row .org .mono { color: var(--ink-2); }
+.date {
+  margin-left: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.meta {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+li {
+  position: relative;
+  padding-left: 11pt;
+  orphans: 2;
+  widows: 2;
+}
+li::before {
+  content: "–";
+  position: absolute;
+  left: 1pt;
+  color: var(--ink-2);
+}
+
+/* Ledger: mono label column on the left, content on the right (coursework, skills). */
+dl { margin: 0; }
+dl > div {
+  display: grid;
+  grid-template-columns: var(--label-w, 0.72in) minmax(0, 1fr);
+  column-gap: 10pt;
+  align-items: baseline;
+}
+dl > div + div { margin-top: 1pt; }
+dt {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  line-height: calc(var(--fs) * var(--lh));
+}
+dd { margin: 0; }
+dd b { font-weight: 500; }
+dd .arrow { color: var(--ink-2); }
+
+/* Same label style as the course codes; the column is sized to "Systems & cloud" so no label wraps. */
+.skills { --label-w: 1.15in; }
+
+/* ---- Print: the sheet becomes the page ---------------------------------- */
+
+@media print {
+  html, body { background: var(--sheet); }
+  .bar, .skip { display: none !important; }
+  .sheet {
+    max-width: none;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  a { color: inherit; text-decoration: none; }
+}
