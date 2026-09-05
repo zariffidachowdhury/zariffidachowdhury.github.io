@@ -8,20 +8,23 @@ them into index.html between <!-- receipts:start --> and <!-- receipts:end -->.
 
     python3 tools/receipts.py ../../capstone-gpt   # path to the clone
 
-Run integrity.py afterwards if any pinned file changed (index.html itself
-is not pinned). Standard library only.
+The line links point at the clone's current commit, not at main, so the
+lines on the page and the lines behind the links stay the same even after
+the repo moves on. Run integrity.py afterwards if any pinned file changed
+(index.html itself is not pinned). Standard library only.
 """
 from __future__ import annotations
 
 import html
-import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 INDEX = ROOT / "index.html"
 GH = "https://github.com/zariffidachowdhury/capstone-gpt"
+SHA = "main"  # replaced by the clone's commit in main()
 
 
 def read_lines(clone: Path, rel: str, a: int, b: int) -> list[tuple[int, str]]:
@@ -36,8 +39,8 @@ def code_block(rel: str, lines: list[tuple[int, str]], hl: set[int] = frozenset(
         f'<span class="t">{html.escape(t) or " "}</span></span>'
         for n, t in lines
     )
-    return (f'<p class="src"><a href="{GH}/blob/main/{rel}#L{a}-L{b}">{html.escape(rel)}, lines {a} to {b} '
-            f'<span aria-hidden="true">↗</span></a></p>\n<pre><code>{spans}</code></pre>')
+    return (f'<p class="src"><a href="{GH}/blob/{SHA}/{rel}#L{a}-L{b}">{html.escape(rel)}, lines {a} to {b} '
+            f'at {SHA[:7]} <span aria-hidden="true">↗</span></a></p>\n<pre><code>{spans}</code></pre>')
 
 
 def listing(title: str, href: str, rows: list[str], hl: set[str] = frozenset()) -> str:
@@ -81,10 +84,10 @@ def build(clone: Path) -> str:
         ("Ten REST routes across seven PHP endpoints, over a normalized five-table MySQL schema",
          [("api/", f"{GH}/tree/main/api"), ("sql/", f"{GH}/tree/main/sql")],
          details("the listing that shows it",
-                 listing("api/ on GitHub", f"{GH}/tree/main/api",
+                 listing("api/ at " + SHA[:7] + " on GitHub", f"{GH}/tree/{SHA}/api",
                          ["$ ls api/*.php"] + endpoints + ["(bootstrap.php and config.php are shared includes, not endpoints)"],
                          set(endpoints)),
-                 listing("sql/ on GitHub", f"{GH}/tree/main/sql",
+                 listing("sql/ at " + SHA[:7] + " on GitHub", f"{GH}/tree/{SHA}/sql",
                          ['$ grep -n "CREATE TABLE" sql/*.sql'] + tables, set(tables)))),
         ("Input is validated server-side before anything reaches the retrieval workflow",
          [("api/chat_handler.php", f"{GH}/blob/main/api/chat_handler.php")],
@@ -100,7 +103,7 @@ def build(clone: Path) -> str:
         ("Architecture, testing strategy, and roadmap written down in the repo",
          [("docs/", f"{GH}/tree/main/docs")],
          details("the listing that shows it",
-                 listing("docs/ on GitHub", f"{GH}/tree/main/docs", ["$ ls docs/"] + docs,
+                 listing("docs/ at " + SHA[:7] + " on GitHub", f"{GH}/tree/{SHA}/docs", ["$ ls docs/"] + docs,
                          {"system-architecture.md", "testing-strategy.md", "future-roadmap.md"}))),
     ]
 
@@ -120,11 +123,29 @@ def build(clone: Path) -> str:
             '          <!-- receipts:end -->')
 
 
+def head_sha(clone: Path) -> str:
+    """The clone's checked-out commit. A second argument overrides it (for a copy without .git)."""
+    if len(sys.argv) > 2:
+        return sys.argv[2]
+    out = subprocess.run(["git", "-C", str(clone), "rev-parse", "HEAD"], capture_output=True, text=True)
+    sha = out.stdout.strip()
+    if out.returncode != 0 or not re.fullmatch(r"[0-9a-f]{40}", sha):
+        print(f"could not read the commit of {clone} (is it a git clone?)", file=sys.stderr)
+        sys.exit(1)
+    dirty = subprocess.run(["git", "-C", str(clone), "status", "--porcelain"], capture_output=True, text=True).stdout.strip()
+    if dirty:
+        print("the clone has uncommitted changes, so the links could point at different lines. Commit or stash first.", file=sys.stderr)
+        sys.exit(1)
+    return sha
+
+
 def main() -> int:
+    global SHA
     clone = Path(sys.argv[1] if len(sys.argv) > 1 else ROOT.parent.parent / "capstone-gpt").resolve()
     if not (clone / "api" / "chat_handler.php").is_file():
         print(f"no capstone-gpt clone at {clone}", file=sys.stderr)
         return 1
+    SHA = head_sha(clone)
     block = build(clone)
     s = INDEX.read_text(encoding="utf-8")
     if "<!-- receipts:start -->" not in s:
@@ -134,7 +155,7 @@ def main() -> int:
     INDEX.write_text(s, encoding="utf-8")
     n_excerpts = block.count('class="excerpt"')
     n_lines = block.count('class="line')
-    print(f"receipts rebuilt from {clone}: {n_excerpts} excerpts, {n_lines} lines")
+    print(f"receipts rebuilt from {clone} at {SHA[:7]}: {n_excerpts} excerpts, {n_lines} lines")
     return 0
 
 

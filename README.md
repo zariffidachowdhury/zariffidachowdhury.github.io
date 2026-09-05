@@ -23,7 +23,7 @@ The page also checks itself: `tools/integrity.py` pins a SHA-256 hash of every f
 | `js/trace.js` | The ray tracer: three spheres on ruled paper, Phong, shadows, one bounce, spotlight cone, draggable light |
 | `js/theme.js` | Six lines that apply a saved theme choice before first paint |
 | `tools/integrity.py` | Writes the manifest and the integrity ledger into `index.html`. Run it after changing any file |
-| `tools/receipts.py` | Rebuilds the code excerpts under the Capstone GPT facts from a local clone of capstone-gpt |
+| `tools/receipts.py` | Rebuilds the code excerpts under the Capstone GPT facts from a local clone of capstone-gpt, with the line links pinned to that clone's commit |
 | `fonts/` | Source Serif 4, IBM Plex Sans and IBM Plex Mono (latin subsets, WOFF2), `fonts.css`, and the licenses |
 | `img/` | Headshot, Capstone GPT screenshots, Open Graph card, favicons |
 | `robots.txt`, `sitemap.xml`, `.nojekyll` | Crawl hints. `.nojekyll` tells Pages to publish the files exactly as committed |
