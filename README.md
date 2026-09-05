@@ -4,22 +4,22 @@ Source for my personal site and résumé, served by GitHub Pages at <https://zar
 
 ## What it is
 
-Hand-written HTML and CSS. No framework, no analytics, no cookies, and no requests to other hosts: the three typefaces are self-hosted from `fonts/`. A strict Content-Security-Policy (set in a `<meta>` tag, since GitHub Pages can't send headers) allows nothing but this origin — no inline script, no inline style.
+Hand-written HTML and CSS. No framework, no analytics, no cookies, and no requests to other hosts: the three typefaces are self-hosted from `fonts/`. A strict Content-Security-Policy (set in a `<meta>` tag, since GitHub Pages can't send headers) allows nothing but this origin: no inline script, no inline style.
 
 The page also checks itself: `tools/integrity.py` pins a SHA-256 hash of every file the page loads into `index.html`, and `js/audit.js` re-hashes each file in the visitor's browser and reports the result in the colophon.
 
 | Path | What it is |
 |---|---|
 | `index.html` | The site: selected work, experience, about, tools, contact |
-| `resume.html` | The résumé as a web page; also the source of `resume.pdf` |
+| `resume.html` | The résumé as a web page, and the source of `resume.pdf` |
 | `resume.pdf` | One US-Letter page, printed from `resume.html` (see below) |
 | `404.html` | Not-found page in the same style |
-| `css/site.css`, `css/resume.css` | All styling; the design tokens sit at the top of each file |
+| `css/site.css`, `css/resume.css` | All styling. The design tokens sit at the top of each file |
 | `js/audit.js` | Re-hashes every loaded file with SubtleCrypto and compares against the pinned manifest |
-| `tools/integrity.py` | Writes the manifest and the integrity ledger into `index.html` — run it after changing any file |
+| `tools/integrity.py` | Writes the manifest and the integrity ledger into `index.html`. Run it after changing any file |
 | `fonts/` | Source Serif 4, IBM Plex Sans and IBM Plex Mono (latin subsets, WOFF2), `fonts.css`, and the licenses |
 | `img/` | Headshot, Capstone GPT screenshots, Open Graph card, favicons |
-| `robots.txt`, `sitemap.xml`, `.nojekyll` | Crawl hints; `.nojekyll` tells Pages to publish the files exactly as committed |
+| `robots.txt`, `sitemap.xml`, `.nojekyll` | Crawl hints. `.nojekyll` tells Pages to publish the files exactly as committed |
 
 Deployment is GitHub Pages from the `main` branch, root directory. Pushing to `main` publishes.
 
@@ -29,7 +29,7 @@ Deployment is GitHub Pages from the `main` branch, root directory. Pushing to `m
 python3 tools/integrity.py   # re-pin the hashes, then commit index.html with the change
 ```
 
-If you forget, the site still works — the colophon will just report which file differs from what was pinned.
+If you forget, the site still works. The colophon will just report which file differs from what was pinned.
 
 ## Run it locally
 
@@ -69,4 +69,4 @@ Source Serif 4 (Adobe), IBM Plex Sans and IBM Plex Mono (IBM) are all under the 
 
 ## Copyright
 
-© 2026 Zarif Fida Chowdhury. The writing, photographs, screenshots and résumé are mine and not licensed for reuse. The HTML and CSS are there to be read; borrow techniques from them freely.
+© 2026 Zarif Fida Chowdhury. The writing, photographs, screenshots and résumé are mine and not licensed for reuse. The HTML and CSS are there to be read. Borrow techniques from them freely.

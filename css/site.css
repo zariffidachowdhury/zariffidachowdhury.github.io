@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   zariffidachowdhury.github.io — hand-written stylesheet
+   zariffidachowdhury.github.io: hand-written stylesheet
    One theme (paper), one accent (oxblood), three faces, no framework.
    ------------------------------------------------------------------ */
 
@@ -148,8 +148,8 @@ h1, h2, h3 { margin: 0; font-weight: 580; }
 .nav a:hover { color: var(--ox); text-decoration: underline; text-decoration-thickness: 1px; }
 
 /* ---------- title block ----------
-   The header is a document-control block — name, degree, status, reach,
-   revision in one ruled box — rather than a poster-sized name. */
+   The header is a document-control block (name, degree, status, reach,
+   revision in one ruled box) rather than a poster-sized name. */
 
 .titleblock { padding-block: clamp(40px, 6vw, 72px) clamp(56px, 8vw, 104px); }
 

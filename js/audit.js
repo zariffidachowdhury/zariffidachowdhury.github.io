@@ -1,6 +1,6 @@
-/* audit.js — the page re-hashes every file it loads and compares against the
+/* audit.js: the page re-hashes every file it loads and compares against the
    SHA-256 values pinned in index.html (see tools/integrity.py). No network
-   beyond this origin; nothing is sent anywhere. */
+   beyond this origin. Nothing is sent anywhere. */
 (function () {
   "use strict";
 
@@ -57,7 +57,7 @@
     if (bad.length) {
       summary.textContent = (results.length - bad.length) + " of " + results.length + " files match. Differs from what is pinned: " + bad.join(", ") + ". Checked at " + when + ".";
     } else {
-      summary.textContent = results.length + " of " + results.length + " files match what is pinned — re-hashed in your browser in " + ms + " ms at " + when + ".";
+      summary.textContent = results.length + " of " + results.length + " files match what is pinned. Re-hashed in your browser in " + ms + " ms at " + when + ".";
     }
   });
 })();

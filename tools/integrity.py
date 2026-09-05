@@ -11,7 +11,7 @@ It rewrites two things in index.html:
 
 js/audit.js reads the manifest in the visitor's browser, re-hashes each file
 with SubtleCrypto, and reports matches in the colophon. No build tools, no
-dependencies — standard library only.
+dependencies, standard library only.
 """
 from __future__ import annotations
 
@@ -64,7 +64,7 @@ def main() -> int:
         rows.append(
             f'  <li data-group="{key}">\n'
             f'    <details>\n'
-            f'      <summary>{html.escape(label)} — {n} file{"s" if n != 1 else ""}</summary>\n'
+            f'      <summary>{html.escape(label)} · {n} file{"s" if n != 1 else ""}</summary>\n'
             f'      <ul class="files">\n' + "\n".join(items) + "\n"
             f'      </ul>\n'
             f'    </details>\n'

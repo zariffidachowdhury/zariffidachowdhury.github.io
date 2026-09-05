@@ -1,4 +1,4 @@
-/* resume.css — the one-page résumé sheet. Same tokens as site.css; denser type.
+/* resume.css: the one-page résumé sheet. Same tokens as site.css, denser type.
    Screen: a paper ground with the sheet centred on it. Print: the sheet *is* the page. */
 
 :root {
@@ -146,7 +146,7 @@ h1 {
 }
 .sep { margin: 0 .45em; }
 
-/* Inline code and inline URLs are set in the mono face — never the browser's default `monospace`,
+/* Inline code and inline URLs are set in the mono face, never the browser's default `monospace`,
    which would drag a system font (Liberation/DejaVu) into the PDF. */
 code, .mono {
   font-family: var(--mono);
@@ -168,7 +168,7 @@ h2 {
   font-family: var(--mono);
   font-weight: 500;
   font-size: var(--fs-mono);
-  line-height: 1;            /* uppercase mono, no descenders — the em box is enough */
+  line-height: 1;            /* uppercase mono, no descenders, the em box is enough */
   letter-spacing: .08em;
   text-transform: uppercase;
   break-after: avoid;
