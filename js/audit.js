@@ -22,7 +22,7 @@
   }
 
   function check(path) {
-    return fetch(path, { cache: "force-cache" })
+    return fetch(path, { cache: "no-cache" })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
       .then(function (buf) { return crypto.subtle.digest("SHA-256", buf); })
       .then(function (d) { return hex(d) === manifest[path]; })
