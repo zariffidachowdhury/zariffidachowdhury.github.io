@@ -32,7 +32,7 @@ GROUPS = [
                                if p.suffix in {".woff2", ".css"})),
     ("img",    "Images",      sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "img").glob("*")
                                if p.suffix in {".jpg", ".png", ".svg", ".webp"})),
-    ("js",     "Script",      ["js/audit.js"]),
+    ("js",     "Scripts",     sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "js").glob("*.js"))),
     ("resume", "Résumé",      ["resume.pdf", "resume.html"]),
 ]
 

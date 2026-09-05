@@ -32,6 +32,8 @@
   <link rel="preload" href="fonts/IBMPlexSans-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="fonts/fonts.css">
   <link rel="stylesheet" href="css/site.css">
+  <!-- Applies a saved day/night choice before first paint. Six lines, no dependencies. -->
+  <script src="js/theme.js"></script>
 
   <script type="application/ld+json">
   {
@@ -59,6 +61,7 @@
       <a class="brand" href="#top">Zarif Fida Chowdhury</a>
       <nav class="nav" aria-label="Sections">
         <a href="#work">Work</a>
+        <a href="#bench">Bench</a>
         <a href="#experience">Experience</a>
         <a href="#about">About</a>
         <a href="resume.pdf">Résumé <span aria-hidden="true">↓</span></a>
@@ -97,7 +100,7 @@
           </div>
           <div>
             <dt>Revision</dt>
-            <dd>2, September 2026</dd>
+            <dd>3, September 2026</dd>
           </div>
         </dl>
       </div>
@@ -181,7 +184,7 @@
             <span class="label">CYB 236</span>
             <div>
               <h3 class="title">Data Security</h3>
-              <p class="desc">Designed and implemented ZFC-Cipher, a 64-bit Feistel block cipher. Steganography extraction, a Saltzer &amp; Schroeder analysis, and a physical security assessment of a campus building.</p>
+              <p class="desc">Designed and implemented ZFC-Cipher, a 64-bit Feistel block cipher. Steganography extraction, a Saltzer &amp; Schroeder analysis, and a physical security assessment of a campus building. <a href="#bench">The Feistel structure, live <span aria-hidden="true">↓</span></a></p>
             </div>
           </li>
           <li class="row">
@@ -201,6 +204,82 @@
         </ul>
         <!-- CONFIRM: edit or remove this line if you'd rather not offer walkthroughs -->
         <p class="rows-note full">Code for these lives in course repositories. Ask and I'll walk through any of it.</p>
+      </div>
+    </section>
+
+    <!-- Bench: a 64-bit Feistel network running in the page. The structure ZFC-Cipher (CYB 236) is built on.
+         js/bench.js fills the bit strips and the round table. With JavaScript off the inputs stay and a note says the bench is idle. -->
+    <section class="section wrap" id="bench" aria-labelledby="bench-eyebrow">
+      <div class="ledger-grid">
+        <p class="eyebrow" id="bench-eyebrow">Bench</p>
+        <div>
+          <h2 id="bench-title">Sixty-four bits, sixteen rounds.</h2>
+          <p class="pitch">ZFC-Cipher, the block cipher I designed for CYB 236, is a Feistel network. This is that structure running in your browser. Type a block and a key, then click any bit to flip it and watch one change spread through the rounds.</p>
+          <p class="qualifier">The round function here is a simple demo one, not the ZFC one. The structure is the point: F never has to be invertible, because the swap makes the whole thing invertible. The same rounds run backwards decrypt.</p>
+        </div>
+
+        <form class="bench full" id="bench-form" aria-labelledby="bench-title">
+          <div class="brow">
+            <label for="bench-text">Block</label>
+            <div class="bfield">
+              <input id="bench-text" type="text" maxlength="8" spellcheck="false" autocomplete="off" autocapitalize="off" value="hello wo" aria-describedby="bench-block-hex">
+              <span class="hexout" id="bench-block-hex">8 characters, 64 bits</span>
+            </div>
+          </div>
+          <div class="brow">
+            <label for="bench-key">Key</label>
+            <div class="bfield">
+              <input id="bench-key" type="text" maxlength="8" spellcheck="false" autocomplete="off" autocapitalize="off" value="one key." aria-describedby="bench-key-hex">
+              <span class="hexout" id="bench-key-hex">8 characters, 64 bits</span>
+            </div>
+          </div>
+          <div class="brow">
+            <label for="bench-rounds">Rounds</label>
+            <div class="bfield">
+              <input id="bench-rounds" type="range" min="1" max="16" step="1" value="16">
+              <output id="bench-rounds-out" for="bench-rounds">16</output>
+            </div>
+          </div>
+
+          <div class="brow brow--strip">
+            <span class="blabel" id="bench-block-label">Block bits</span>
+            <div class="strip" data-strip="block" role="group" aria-labelledby="bench-block-label"></div>
+          </div>
+          <div class="brow brow--strip">
+            <span class="blabel" id="bench-key-label">Key bits</span>
+            <div class="strip" data-strip="key" role="group" aria-labelledby="bench-key-label"></div>
+          </div>
+          <div class="brow brow--strip">
+            <span class="blabel" id="bench-out-label">Ciphertext</span>
+            <div>
+              <div class="strip" data-strip="out" role="img" aria-labelledby="bench-out-label bench-out-hex"></div>
+              <span class="hexout" id="bench-out-hex"></span>
+            </div>
+          </div>
+
+          <div class="brow">
+            <span class="blabel">Flip</span>
+            <div class="bactions">
+              <button type="button" data-action="flip-block">a random block bit</button>
+              <button type="button" data-action="flip-key">a random key bit</button>
+              <button type="button" data-action="reset">reset</button>
+            </div>
+          </div>
+
+          <p class="bench-summary" id="bench-summary" aria-live="polite"></p>
+
+          <div class="table-wrap">
+            <table class="rounds">
+              <caption class="visually-hidden">State after each round: left half, right half, round key, and how many bits differ from the run without any flips</caption>
+              <thead>
+                <tr><th scope="col">Round</th><th scope="col">Left</th><th scope="col">Right</th><th scope="col">Round key</th><th scope="col">Bits changed</th></tr>
+              </thead>
+              <tbody id="bench-rounds-body"></tbody>
+            </table>
+          </div>
+          <p class="rows-note" id="bench-trip"></p>
+          <p class="rows-note" id="bench-note">JavaScript is off, so the bench is idle. With it on, this runs a 64-bit Feistel network on the block and key above and shows every round.</p>
+        </form>
       </div>
     </section>
 
@@ -305,7 +384,7 @@
     <details>
       <summary>Stylesheets · 2 files</summary>
       <ul class="files">
-            <li data-file="css/site.css"><span>css/site.css</span><span class="hash">724eeedcb880…b85a54</span></li>
+            <li data-file="css/site.css"><span>css/site.css</span><span class="hash">495a0a2bfa0e…ae6455</span></li>
             <li data-file="css/resume.css"><span>css/resume.css</span><span class="hash">2b8cf59d5461…d19512</span></li>
       </ul>
     </details>
@@ -339,16 +418,19 @@
             <li data-file="img/favicon-32.png"><span>img/favicon-32.png</span><span class="hash">523322dd23ac…461348</span></li>
             <li data-file="img/favicon.svg"><span>img/favicon.svg</span><span class="hash">5ae76d281839…f54802</span></li>
             <li data-file="img/headshot.jpg"><span>img/headshot.jpg</span><span class="hash">17c830d10930…ffa0d1</span></li>
-            <li data-file="img/og.png"><span>img/og.png</span><span class="hash">c3fae1f60f0a…7f3317</span></li>
+            <li data-file="img/og.png"><span>img/og.png</span><span class="hash">bc2267f84497…140771</span></li>
       </ul>
     </details>
     <span class="audit-status">pinned</span>
   </li>
   <li data-group="js">
     <details>
-      <summary>Script · 1 file</summary>
+      <summary>Scripts · 4 files</summary>
       <ul class="files">
             <li data-file="js/audit.js"><span>js/audit.js</span><span class="hash">e5ebf6865c73…c30b7d</span></li>
+            <li data-file="js/bench.js"><span>js/bench.js</span><span class="hash">3b577eb64d10…98caeb</span></li>
+            <li data-file="js/nav.js"><span>js/nav.js</span><span class="hash">7d85561eed4b…67c430</span></li>
+            <li data-file="js/theme.js"><span>js/theme.js</span><span class="hash">940d3b45b4ff…6f9442</span></li>
       </ul>
     </details>
     <span class="audit-status">pinned</span>
@@ -368,14 +450,16 @@
           <p class="rows-note" id="audit-summary">JavaScript is off, so nothing was re-checked. The hashes above are what's pinned. Compare by hand with <code>sha256sum</code>.</p>
         </div>
       </div>
-      <p class="col-foot">Hand-written HTML and CSS. No framework, no analytics, no cookies. Set in Source Serif 4, IBM Plex Sans and IBM Plex Mono.</p>
+      <p class="col-foot">Hand-written HTML, CSS and JavaScript. No framework, no analytics, no cookies. The night theme remembers itself in your browser and nowhere else. Set in Source Serif 4, IBM Plex Sans and IBM Plex Mono.</p>
       <!-- CONFIRM: the revision note is a true story. Keep it or cut it -->
-      <p class="col-foot">Revision 2, September 2026. Rebuilt by hand after two friends said the last one looked machine-made.</p>
+      <p class="col-foot">Revision 3, September 2026. Rebuilt by hand after two friends said the last one looked machine-made. This revision added the bench and the night theme.</p>
       <p class="col-foot"><a href="https://github.com/zariffidachowdhury/zariffidachowdhury.github.io">Source <span aria-hidden="true">↗</span></a><span class="sep" aria-hidden="true">·</span><a href="https://github.com/zariffidachowdhury/zariffidachowdhury.github.io/blob/main/tools/integrity.py">integrity.py <span aria-hidden="true">↗</span></a><span class="sep" aria-hidden="true">·</span>© 2026 Zarif Fida Chowdhury</p>
     </div>
   </footer>
 
-  <script type="application/json" id="integrity-manifest">{"css/resume.css":"2b8cf59d5461e6700ae7450199f5c19b3507df9da3a31180200d27dc16d19512","css/site.css":"724eeedcb880d22c24aa7e3285a3a30cc0bf187ebef320cc5f2a5cc449b85a54","fonts/IBMPlexMono-Italic.woff2":"0840095faae86403735a8c04014b72cb29e7923646b222b360b7e8252932e4e3","fonts/IBMPlexMono-Medium.woff2":"01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22","fonts/IBMPlexMono-Regular.woff2":"08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7","fonts/IBMPlexSans-Variable-Italic.woff2":"4363757d2695c7633f98472855849f7c30528eba869d7968ee35b58c87cf14c1","fonts/IBMPlexSans-Variable.woff2":"e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470","fonts/SourceSerif4-Variable-Italic.woff2":"96e6393209728ab93c334ae739af8a040cd2006c82e8614d6465a8084db88f89","fonts/SourceSerif4-Variable.woff2":"f2ea9c12d2fe9bd3a9589b02ad2c0909da88f30938c91adc838c4f4098f9f9e0","fonts/fonts.css":"d8f85ef2a6c1f43d5f604a75baa9fa7ba27b39d11472e8a08202db19555ce4ea","img/apple-touch-icon.png":"338493057909e15769049db1bf2d70f278daa191e6bff9656e429b1d20dc9065","img/capstone-chat-800.jpg":"9c3f324297132e1400beec01e62a595d5f0eaea04be745244789c74b3100e33a","img/capstone-chat.jpg":"305c4e89c47f3be19a3953542e750a0e1b77ca0d3fd5e8f3b39c5a3b1cf7a663","img/capstone-dashboard-800.jpg":"05ff0324e42f7c1cc876cb56f98174e10c99bd48398081a75e215014355d4350","img/capstone-dashboard.jpg":"4c6d1e06c79ebbe8bb21148583d9d578bb7518d5e0f5eab2dfc0ec4c86c12884","img/favicon-32.png":"523322dd23ac1cf569515d10802ad4bd4b24a0c265780c6c7f8c9b814b461348","img/favicon.svg":"5ae76d2818390198a7c77c983fed9c3525c7ea72313fe4a0acaee24935f54802","img/headshot.jpg":"17c830d10930e27072d01946438caee9a21f072e67a0cb95b1855fc566ffa0d1","img/og.png":"c3fae1f60f0aa11ea366f9471cfce832225e75d5dd13756a57cfbe000f7f3317","js/audit.js":"e5ebf6865c7332d56488a11288922e092a647e8dff9972389c1abf575cc30b7d","resume.html":"aa6355ed5f4fc101e4aa2a9c02a135ba963396c5d7ae89dcc2a2a1ff302e94ee","resume.pdf":"3720ee4a687af2c86893b1ebd270530c86b6711b46a69daa94082f20758281cb"}</script>
+  <script type="application/json" id="integrity-manifest">{"css/resume.css":"2b8cf59d5461e6700ae7450199f5c19b3507df9da3a31180200d27dc16d19512","css/site.css":"495a0a2bfa0ea1055e58f11b54445f42492731dc0401bde7cb0e05ad55ae6455","fonts/IBMPlexMono-Italic.woff2":"0840095faae86403735a8c04014b72cb29e7923646b222b360b7e8252932e4e3","fonts/IBMPlexMono-Medium.woff2":"01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22","fonts/IBMPlexMono-Regular.woff2":"08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7","fonts/IBMPlexSans-Variable-Italic.woff2":"4363757d2695c7633f98472855849f7c30528eba869d7968ee35b58c87cf14c1","fonts/IBMPlexSans-Variable.woff2":"e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470","fonts/SourceSerif4-Variable-Italic.woff2":"96e6393209728ab93c334ae739af8a040cd2006c82e8614d6465a8084db88f89","fonts/SourceSerif4-Variable.woff2":"f2ea9c12d2fe9bd3a9589b02ad2c0909da88f30938c91adc838c4f4098f9f9e0","fonts/fonts.css":"d8f85ef2a6c1f43d5f604a75baa9fa7ba27b39d11472e8a08202db19555ce4ea","img/apple-touch-icon.png":"338493057909e15769049db1bf2d70f278daa191e6bff9656e429b1d20dc9065","img/capstone-chat-800.jpg":"9c3f324297132e1400beec01e62a595d5f0eaea04be745244789c74b3100e33a","img/capstone-chat.jpg":"305c4e89c47f3be19a3953542e750a0e1b77ca0d3fd5e8f3b39c5a3b1cf7a663","img/capstone-dashboard-800.jpg":"05ff0324e42f7c1cc876cb56f98174e10c99bd48398081a75e215014355d4350","img/capstone-dashboard.jpg":"4c6d1e06c79ebbe8bb21148583d9d578bb7518d5e0f5eab2dfc0ec4c86c12884","img/favicon-32.png":"523322dd23ac1cf569515d10802ad4bd4b24a0c265780c6c7f8c9b814b461348","img/favicon.svg":"5ae76d2818390198a7c77c983fed9c3525c7ea72313fe4a0acaee24935f54802","img/headshot.jpg":"17c830d10930e27072d01946438caee9a21f072e67a0cb95b1855fc566ffa0d1","img/og.png":"bc2267f8449767bbfebd56895d254af9704f3eae7b827a0fa9eb3ed6f2140771","js/audit.js":"e5ebf6865c7332d56488a11288922e092a647e8dff9972389c1abf575cc30b7d","js/bench.js":"3b577eb64d10479d01e6b07c57f611ecd872ac7da031aa87ebd7bd041b98caeb","js/nav.js":"7d85561eed4b5347a3733e00545639fd4f3c68d4b6b06bbfad02af26de67c430","js/theme.js":"940d3b45b4ff69b74d69b9b6408a055a507f0f262d8df8c05b1368e88e6f9442","resume.html":"aa6355ed5f4fc101e4aa2a9c02a135ba963396c5d7ae89dcc2a2a1ff302e94ee","resume.pdf":"3720ee4a687af2c86893b1ebd270530c86b6711b46a69daa94082f20758281cb"}</script>
   <script src="js/audit.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/bench.js" defer></script>
 </body>
 </html>

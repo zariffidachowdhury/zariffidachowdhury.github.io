@@ -1,6 +1,7 @@
 /* ------------------------------------------------------------------
    zariffidachowdhury.github.io: hand-written stylesheet
-   One theme (paper), one accent (oxblood), three faces, no framework.
+   Paper by day, slate by night, one accent (oxblood), three faces,
+   no framework.
    ------------------------------------------------------------------ */
 
 :root {
@@ -25,6 +26,38 @@
 
   color-scheme: light;
 }
+
+/* Night: the same ledger re-inked. Follows the system setting unless the
+   visitor picks one with the toggle in the masthead (js/theme.js applies a
+   saved choice before first paint). The accent lifts to keep contrast. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:   #15171b;
+    --paper-2: #1c1f24;
+    --ink:     #e6e4df;
+    --ink-2:   #a3a7ad;
+    --rule:    #3a3e45;
+    --rule-2:  #2a2e34;
+    --ox:      #d98089;
+    --ox-2:    #e6a1a8;
+    --ox-tint: #3b2327;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) .plate img { filter: brightness(0.88); }
+}
+:root[data-theme="dark"] {
+  --paper:   #15171b;
+  --paper-2: #1c1f24;
+  --ink:     #e6e4df;
+  --ink-2:   #a3a7ad;
+  --rule:    #3a3e45;
+  --rule-2:  #2a2e34;
+  --ox:      #d98089;
+  --ox-2:    #e6a1a8;
+  --ox-tint: #3b2327;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] .plate img { filter: brightness(0.88); }
 
 /* ---------- base ---------- */
 
@@ -146,6 +179,33 @@ h1, h2, h3 { margin: 0; font-weight: 580; }
 }
 .nav a { color: var(--ink); text-decoration: none; }
 .nav a:hover { color: var(--ox); text-decoration: underline; text-decoration-thickness: 1px; }
+.nav a[aria-current="true"] { color: var(--ox); text-decoration: underline; text-decoration-thickness: 1px; }
+
+/* the day/night toggle, added by js/nav.js */
+.theme-toggle {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  line-height: inherit;
+}
+.theme-toggle::before { content: "○ "; color: var(--ink-2); }
+.theme-toggle[aria-pressed="true"]::before { content: "● "; color: var(--ox); }
+.theme-toggle:hover { color: var(--ox); text-decoration: underline; text-decoration-thickness: 1px; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* ---------- title block ----------
    The header is a document-control block (name, degree, status, reach,
@@ -440,6 +500,170 @@ h1, h2, h3 { margin: 0; font-weight: 580; }
   line-height: 1.7;
 }
 .tools dd { margin: 0; font-size: 15.5px; line-height: 1.6; max-width: 62ch; }
+
+/* ---------- bench: a Feistel network, live ----------
+   Inputs and bit strips sit on the same margin/content grid as every other
+   row, so the labels share the ledger's left edge. js/bench.js fills the
+   strips and the round table. */
+
+.bench { margin: 8px 0 0; border-top: 1px solid var(--rule-2); }
+.brow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px var(--col-gap);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule-2);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .brow { grid-template-columns: var(--margin-col) minmax(0, 1fr); }
+}
+.brow--strip { align-items: start; }
+.brow label, .blabel {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+.bfield { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; min-width: 0; }
+.bench input[type="text"] {
+  font-family: var(--mono);
+  font-size: 15.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 7px 10px;
+  width: 13ch;
+  max-width: 100%;
+}
+.bench input[type="text"]:focus { border-color: var(--ink); }
+.hexout {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.bench input[type="range"] { width: 220px; max-width: 100%; accent-color: var(--ox); margin: 0; }
+.bench output { font-family: var(--mono); font-size: 13.5px; font-variant-numeric: tabular-nums; min-width: 2ch; }
+
+.strip {
+  --bit: 11px;
+  --bit-gap: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bit-gap);
+  padding-top: 3px;
+}
+.strip + .hexout { display: block; margin-top: 8px; }
+.half { display: flex; align-items: center; gap: 10px; }
+.half .tag { font-family: var(--mono); font-size: 11px; color: var(--ink-2); width: 10px; line-height: 1; }
+.cells { display: grid; grid-template-columns: repeat(32, var(--bit)); gap: var(--bit-gap); }
+.bit {
+  display: block;
+  width: var(--bit);
+  height: var(--bit);
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper-2);
+  box-sizing: border-box;
+}
+button.bit { cursor: pointer; }
+button.bit:hover { border-color: var(--ox); box-shadow: 0 0 0 1px var(--ox); }
+.bit.on { background: var(--ink); }
+.bit.flipped { box-shadow: 0 0 0 2px var(--ox); }
+.bit.changed { background: var(--ox); border-color: var(--ox); }
+.bit.changed:not(.on) { background: var(--ox-tint); }
+@media (max-width: 520px) {
+  .strip { --bit: 8px; --bit-gap: 1px; }
+  .half { gap: 6px; }
+  .half .tag { width: 8px; font-size: 10px; }
+}
+
+.bactions { display: flex; flex-wrap: wrap; gap: 8px 12px; }
+.bactions button, .copy {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 6px 12px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.bactions button:hover, .copy:hover { border-color: var(--ox); color: var(--ox); }
+.bactions button::before { content: "↺ "; color: var(--ink-2); }
+.bactions button[data-action="flip-block"]::before, .bactions button[data-action="flip-key"]::before { content: "⇄ "; }
+
+.bench-summary {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.6;
+  padding: 18px 0 6px;
+  min-height: 1.6em;
+}
+.table-wrap { overflow-x: auto; margin-top: 6px; }
+.rounds {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+.rounds th {
+  text-align: left;
+  font-weight: 500;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  padding: 8px 14px 8px 0;
+  border-bottom: 1px solid var(--rule);
+  white-space: nowrap;
+}
+.rounds td { padding: 5px 14px 5px 0; border-bottom: 1px solid var(--rule-2); white-space: nowrap; }
+.rounds .num { color: var(--ink-2); width: 5ch; }
+.rounds .key { color: var(--ink-2); }
+.rounds .quiet { color: var(--ink-2); font-style: italic; }
+.rounds .out td { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); font-weight: 500; }
+.rounds .delta { width: 34%; min-width: 150px; }
+.bar {
+  display: inline-block;
+  vertical-align: middle;
+  width: calc(100% - 3ch - 12px);
+  max-width: 240px;
+  height: 8px;
+  margin-right: 10px;
+  border: 1px solid var(--rule);
+  background: var(--paper-2);
+  box-sizing: border-box;
+}
+.bar i { display: block; height: 100%; width: 0; background: var(--ox); }
+@media (prefers-reduced-motion: no-preference) {
+  .bar i { transition: width 0.25s ease; }
+}
+@media (max-width: 600px) {
+  /* the round key column goes first on a phone so the change column stays in view */
+  .rounds th:nth-child(4), .rounds td:nth-child(4) { display: none; }
+  .rounds .delta { width: auto; min-width: 108px; }
+  .rounds th, .rounds td { padding-right: 10px; }
+  .bar { width: 60px; }
+}
+.bench:not(.is-live) .rounds, .bench:not(.is-live) .bench-summary, .bench:not(.is-live) #bench-trip { display: none; }
+.bench.is-live #bench-note { margin-top: 6px; }
+
+/* copy button next to the email address, added by js/nav.js */
+.copy { margin-left: 10px; padding: 2px 8px; font-size: 12px; vertical-align: 1px; }
 
 /* reach */
 .reach-lead { font-size: 20px; line-height: 1.5; margin: 0 0 20px; }

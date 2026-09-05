@@ -4,18 +4,23 @@ Source for my personal site and résumé, served by GitHub Pages at <https://zar
 
 ## What it is
 
-Hand-written HTML and CSS. No framework, no analytics, no cookies, and no requests to other hosts: the three typefaces are self-hosted from `fonts/`. A strict Content-Security-Policy (set in a `<meta>` tag, since GitHub Pages can't send headers) allows nothing but this origin: no inline script, no inline style.
+Hand-written HTML, CSS and a little JavaScript. No framework, no analytics, no cookies, and no requests to other hosts: the three typefaces are self-hosted from `fonts/`. A strict Content-Security-Policy (set in a `<meta>` tag, since GitHub Pages can't send headers) allows nothing but this origin: no inline script, no inline style.
+
+The page has a bench: a 64-bit Feistel network (the structure ZFC-Cipher, my CYB 236 block cipher, is built on) that runs in the browser. Type a block and a key, flip any bit, and the round table shows the change spreading. The round function and key schedule in `js/bench.js` are simple demo ones, not the ZFC ones. There is also a day/night theme that follows the system setting until you pick one, a masthead that marks the section you are in, and j/k to move between sections.
 
 The page also checks itself: `tools/integrity.py` pins a SHA-256 hash of every file the page loads into `index.html`, and `js/audit.js` re-hashes each file in the visitor's browser and reports the result in the colophon.
 
 | Path | What it is |
 |---|---|
-| `index.html` | The site: selected work, experience, about, tools, contact |
+| `index.html` | The site: selected work, the bench, experience, about, tools, contact |
 | `resume.html` | The résumé as a web page, and the source of `resume.pdf` |
 | `resume.pdf` | One US-Letter page, printed from `resume.html` (see below) |
 | `404.html` | Not-found page in the same style |
 | `css/site.css`, `css/resume.css` | All styling. The design tokens sit at the top of each file |
 | `js/audit.js` | Re-hashes every loaded file with SubtleCrypto and compares against the pinned manifest |
+| `js/bench.js` | The Feistel bench: bit strips, round table, avalanche count, round-trip check |
+| `js/nav.js` | Day/night toggle, current-section marking, j/k keys, copy button on the email |
+| `js/theme.js` | Six lines that apply a saved theme choice before first paint |
 | `tools/integrity.py` | Writes the manifest and the integrity ledger into `index.html`. Run it after changing any file |
 | `fonts/` | Source Serif 4, IBM Plex Sans and IBM Plex Mono (latin subsets, WOFF2), `fonts.css`, and the licenses |
 | `img/` | Headshot, Capstone GPT screenshots, Open Graph card, favicons |
