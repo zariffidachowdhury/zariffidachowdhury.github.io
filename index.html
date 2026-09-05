@@ -127,33 +127,89 @@
             </figure>
           </div>
 
-          <!-- Each claim links to the file that proves it. -->
+          <!-- Each claim links to the file that proves it and unfolds the lines themselves. tools/receipts.py rebuilds the excerpts from a local clone of capstone-gpt. -->
+          <!-- receipts:start -->
           <ul class="facts" aria-label="What was built, with the file that shows it">
             <li>
               <span>The LLM API key never reaches the browser. Every call goes through one PHP control point</span>
               <span class="receipt"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/chat_handler.php">api/chat_handler.php</a></span>
+              <details class="excerpt">
+                <summary>the lines that show it</summary>
+                <div class="code">
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/chat_handler.php#L61-L71">api/chat_handler.php, lines 61 to 71 <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line"><span class="ln">61</span><span class="t">$ch = curl_init($config[&#x27;dify&#x27;][&#x27;api_url&#x27;] . &#x27;/chat-messages&#x27;);</span></span><span class="line"><span class="ln">62</span><span class="t">curl_setopt_array($ch, [</span></span><span class="line"><span class="ln">63</span><span class="t">    CURLOPT_POST =&gt; true,</span></span><span class="line"><span class="ln">64</span><span class="t">    CURLOPT_HTTPHEADER =&gt; [</span></span><span class="line hl"><span class="ln">65</span><span class="t">        &#x27;Authorization: Bearer &#x27; . $config[&#x27;dify&#x27;][&#x27;api_key&#x27;],</span></span><span class="line"><span class="ln">66</span><span class="t">        &#x27;Content-Type: application/json&#x27;,</span></span><span class="line"><span class="ln">67</span><span class="t">    ],</span></span><span class="line"><span class="ln">68</span><span class="t">    CURLOPT_POSTFIELDS =&gt; json_encode($difyPayload),</span></span><span class="line"><span class="ln">69</span><span class="t">    CURLOPT_RETURNTRANSFER =&gt; true,</span></span><span class="line"><span class="ln">70</span><span class="t">    CURLOPT_CONNECTTIMEOUT =&gt; 10,</span></span><span class="line"><span class="ln">71</span><span class="t">    CURLOPT_TIMEOUT =&gt; 60,</span></span></code></pre>
+                </div>
+              </details>
             </li>
             <li>
               <span>Sessions are 64-character hex tokens from random_bytes(32). Passwords are stored with password_hash()</span>
               <span class="receipt"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/auth.php">api/auth.php</a></span>
+              <details class="excerpt">
+                <summary>the lines that show it</summary>
+                <div class="code">
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/auth.php#L12-L16">api/auth.php, lines 12 to 16 <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line"><span class="ln">12</span><span class="t">    $pdo-&gt;exec(&#x27;DELETE FROM sessions WHERE expires_at &lt;= NOW()&#x27;);</span></span><span class="line"><span class="ln">13</span><span class="t"> </span></span><span class="line hl"><span class="ln">14</span><span class="t">    $sessionId = bin2hex(random_bytes(32));</span></span><span class="line"><span class="ln">15</span><span class="t">    $expiresAt = (new DateTimeImmutable(&#x27;+7 days&#x27;))-&gt;format(&#x27;Y-m-d H:i:s&#x27;);</span></span><span class="line"><span class="ln">16</span><span class="t"> </span></span></code></pre>
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/auth.php#L74-L78">api/auth.php, lines 74 to 78 <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line"><span class="ln">74</span><span class="t">            $stmt-&gt;execute([</span></span><span class="line"><span class="ln">75</span><span class="t">                &#x27;:email&#x27; =&gt; $email,</span></span><span class="line hl"><span class="ln">76</span><span class="t">                &#x27;:password_hash&#x27; =&gt; password_hash($password, PASSWORD_DEFAULT),</span></span><span class="line"><span class="ln">77</span><span class="t">                &#x27;:display_name&#x27; =&gt; $displayName,</span></span><span class="line"><span class="ln">78</span><span class="t">            ]);</span></span></code></pre>
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/auth.php#L127-L129">api/auth.php, lines 127 to 129 <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line hl"><span class="ln">127</span><span class="t">        if (!is_array($user) || !password_verify($password, (string) $user[&#x27;password_hash&#x27;])) {</span></span><span class="line"><span class="ln">128</span><span class="t">            capstone_json_response([&#x27;error&#x27; =&gt; &#x27;Invalid email or password&#x27;], 401);</span></span><span class="line"><span class="ln">129</span><span class="t">        }</span></span></code></pre>
+                </div>
+              </details>
             </li>
             <li>
               <span>Ten REST routes across seven PHP endpoints, over a normalized five-table MySQL schema</span>
               <span class="receipt"><a href="https://github.com/zariffidachowdhury/capstone-gpt/tree/main/api">api/</a><a href="https://github.com/zariffidachowdhury/capstone-gpt/tree/main/sql">sql/</a></span>
+              <details class="excerpt">
+                <summary>the listing that shows it</summary>
+                <div class="code">
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/tree/main/api">api/ on GitHub <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line plain"><span class="t">$ ls api/*.php</span></span><span class="line plain hl"><span class="t">auth.php</span></span><span class="line plain hl"><span class="t">chat_handler.php</span></span><span class="line plain hl"><span class="t">conversations.php</span></span><span class="line plain hl"><span class="t">export.php</span></span><span class="line plain hl"><span class="t">feedback.php</span></span><span class="line plain hl"><span class="t">profile.php</span></span><span class="line plain hl"><span class="t">stats.php</span></span><span class="line plain"><span class="t">(bootstrap.php and config.php are shared includes, not endpoints)</span></span></code></pre>
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/tree/main/sql">sql/ on GitHub <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line plain"><span class="t">$ grep -n &quot;CREATE TABLE&quot; sql/*.sql</span></span><span class="line plain hl"><span class="t">sql/001_schema.sql:7:CREATE TABLE IF NOT EXISTS topics (</span></span><span class="line plain hl"><span class="t">sql/001_schema.sql:12:CREATE TABLE IF NOT EXISTS chat_logs (</span></span><span class="line plain hl"><span class="t">sql/002_feedback.sql:7:CREATE TABLE IF NOT EXISTS feedback (</span></span><span class="line plain hl"><span class="t">sql/003_users.sql:7:CREATE TABLE IF NOT EXISTS users (</span></span><span class="line plain hl"><span class="t">sql/004_sessions.sql:7:CREATE TABLE IF NOT EXISTS sessions (</span></span></code></pre>
+                </div>
+              </details>
             </li>
             <li>
               <span>Input is validated server-side before anything reaches the retrieval workflow</span>
               <span class="receipt"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/chat_handler.php">api/chat_handler.php</a></span>
+              <details class="excerpt">
+                <summary>the lines that show it</summary>
+                <div class="code">
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/chat_handler.php#L19-L27">api/chat_handler.php, lines 19 to 27 <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line"><span class="ln">19</span><span class="t">$input = capstone_get_json_input();</span></span><span class="line"><span class="ln">20</span><span class="t"> </span></span><span class="line"><span class="ln">21</span><span class="t">$query = trim((string) ($input[&#x27;query&#x27;] ?? &#x27;&#x27;));</span></span><span class="line"><span class="ln">22</span><span class="t">$conversationId = trim((string) ($input[&#x27;conversation_id&#x27;] ?? &#x27;&#x27;));</span></span><span class="line"><span class="ln">23</span><span class="t">$topicId = isset($input[&#x27;topic_id&#x27;]) ? (int) $input[&#x27;topic_id&#x27;] : null;</span></span><span class="line"><span class="ln">24</span><span class="t"> </span></span><span class="line hl"><span class="ln">25</span><span class="t">if ($query === &#x27;&#x27;) {</span></span><span class="line hl"><span class="ln">26</span><span class="t">    capstone_json_response([&#x27;error&#x27; =&gt; &#x27;Query is required&#x27;], 400);</span></span><span class="line hl"><span class="ln">27</span><span class="t">}</span></span></code></pre>
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/bootstrap.php#L81-L95">api/bootstrap.php, lines 81 to 95 <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line"><span class="ln">81</span><span class="t">function capstone_get_json_input(): array</span></span><span class="line"><span class="ln">82</span><span class="t">{</span></span><span class="line"><span class="ln">83</span><span class="t">    $rawInput = file_get_contents(&#x27;php://input&#x27;);</span></span><span class="line"><span class="ln">84</span><span class="t"> </span></span><span class="line"><span class="ln">85</span><span class="t">    if ($rawInput === false || trim($rawInput) === &#x27;&#x27;) {</span></span><span class="line"><span class="ln">86</span><span class="t">        return [];</span></span><span class="line"><span class="ln">87</span><span class="t">    }</span></span><span class="line"><span class="ln">88</span><span class="t"> </span></span><span class="line"><span class="ln">89</span><span class="t">    $input = json_decode($rawInput, true);</span></span><span class="line"><span class="ln">90</span><span class="t"> </span></span><span class="line hl"><span class="ln">91</span><span class="t">    if (!is_array($input)) {</span></span><span class="line hl"><span class="ln">92</span><span class="t">        capstone_json_response([&#x27;error&#x27; =&gt; &#x27;Invalid JSON request body&#x27;], 400);</span></span><span class="line hl"><span class="ln">93</span><span class="t">    }</span></span><span class="line"><span class="ln">94</span><span class="t"> </span></span><span class="line"><span class="ln">95</span><span class="t">    return $input;</span></span></code></pre>
+                </div>
+              </details>
             </li>
             <li>
               <span>Conversation logs, feedback capture, instructor analytics, CSV export</span>
               <span class="receipt"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/stats.php">api/stats.php</a><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/export.php">api/export.php</a></span>
+              <details class="excerpt">
+                <summary>the lines that show it</summary>
+                <div class="code">
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/chat_handler.php#L102-L105">api/chat_handler.php, lines 102 to 105 <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line"><span class="ln">102</span><span class="t">    $stmt = $pdo-&gt;prepare(</span></span><span class="line hl"><span class="ln">103</span><span class="t">        &#x27;INSERT INTO chat_logs (cas_uid, topic_id, user_query, ai_response, dify_conversation_id)</span></span><span class="line"><span class="ln">104</span><span class="t">         VALUES (:uid, :topic, :query, :response, :conv_id)&#x27;</span></span><span class="line"><span class="ln">105</span><span class="t">    );</span></span></code></pre>
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/stats.php#L42-L49">api/stats.php, lines 42 to 49 <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line"><span class="ln">42</span><span class="t">    $dailyStmt = $pdo-&gt;prepare(</span></span><span class="line hl"><span class="ln">43</span><span class="t">        &#x27;SELECT DATE(created_at) AS activity_date, COUNT(*) AS question_count</span></span><span class="line"><span class="ln">44</span><span class="t">         FROM chat_logs</span></span><span class="line"><span class="ln">45</span><span class="t">         WHERE cas_uid = :uid</span></span><span class="line"><span class="ln">46</span><span class="t">           AND created_at &gt;= DATE_SUB(CURDATE(), INTERVAL 6 DAY)</span></span><span class="line"><span class="ln">47</span><span class="t">         GROUP BY DATE(created_at)</span></span><span class="line"><span class="ln">48</span><span class="t">         ORDER BY activity_date ASC&#x27;</span></span><span class="line"><span class="ln">49</span><span class="t">    );</span></span></code></pre>
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/blob/main/api/export.php#L50-L59">api/export.php, lines 50 to 59 <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line"><span class="ln">50</span><span class="t">header(&#x27;Content-Type: text/csv; charset=utf-8&#x27;);</span></span><span class="line"><span class="ln">51</span><span class="t">header(&#x27;Content-Disposition: attachment; filename=&quot;&#x27; . $filename . &#x27;&quot;&#x27;);</span></span><span class="line"><span class="ln">52</span><span class="t"> </span></span><span class="line"><span class="ln">53</span><span class="t">$output = fopen(&#x27;php://output&#x27;, &#x27;wb&#x27;);</span></span><span class="line"><span class="ln">54</span><span class="t">if ($output === false) {</span></span><span class="line"><span class="ln">55</span><span class="t">    http_response_code(500);</span></span><span class="line"><span class="ln">56</span><span class="t">    exit;</span></span><span class="line"><span class="ln">57</span><span class="t">}</span></span><span class="line"><span class="ln">58</span><span class="t"> </span></span><span class="line hl"><span class="ln">59</span><span class="t">fputcsv($output, [&#x27;timestamp&#x27;, &#x27;user&#x27;, &#x27;topic&#x27;, &#x27;conversation_id&#x27;, &#x27;query&#x27;, &#x27;response&#x27;], &#x27;,&#x27;, &#x27;&quot;&#x27;, &#x27;&#x27;);</span></span></code></pre>
+                </div>
+              </details>
             </li>
             <li>
               <span>Architecture, testing strategy, and roadmap written down in the repo</span>
               <span class="receipt"><a href="https://github.com/zariffidachowdhury/capstone-gpt/tree/main/docs">docs/</a></span>
+              <details class="excerpt">
+                <summary>the listing that shows it</summary>
+                <div class="code">
+              <p class="src"><a href="https://github.com/zariffidachowdhury/capstone-gpt/tree/main/docs">docs/ on GitHub <span aria-hidden="true">↗</span></a></p>
+              <pre><code><span class="line plain"><span class="t">$ ls docs/</span></span><span class="line plain"><span class="t">demo-script.md</span></span><span class="line plain hl"><span class="t">future-roadmap.md</span></span><span class="line plain"><span class="t">meeting-brief.md</span></span><span class="line plain"><span class="t">mock-projects.md</span></span><span class="line plain"><span class="t">professor-update.md</span></span><span class="line plain"><span class="t">project-charter.md</span></span><span class="line plain"><span class="t">screenshots/</span></span><span class="line plain hl"><span class="t">system-architecture.md</span></span><span class="line plain hl"><span class="t">testing-strategy.md</span></span><span class="line plain"><span class="t">working-agreement.md</span></span></code></pre>
+                </div>
+              </details>
             </li>
           </ul>
+          <!-- receipts:end -->
 
           <div class="note">
             <p class="eyebrow eyebrow--quiet">Caveats</p>
@@ -281,6 +337,31 @@
           <p class="rows-note" id="bench-note">JavaScript is off, so the bench is idle. With it on, this runs a 64-bit Feistel network on the block and key above and shows every round.</p>
         </form>
       </div>
+
+      <!-- Bench, continued: a ray tracer that draws itself into the plate. js/trace.js. -->
+      <div class="ledger-grid subsection" aria-labelledby="trace-title">
+        <p class="eyebrow" id="trace-eyebrow">Bench, continued</p>
+        <div>
+          <h2 id="trace-title">Light, traced.</h2>
+          <p class="pitch">My CSE 386 ray tracer was C++: Phong lighting, shadows, reflections, spotlight cones. This is the same math in about two hundred lines of JavaScript, drawing into the plate below as you watch. Drag on it to move the light.</p>
+          <p class="qualifier">No WebGL, no library. Every pixel is one ray from the eye, a hit test against three spheres and a ruled plane, a shadow ray toward the light, and one bounce for the reflective surfaces. At night the scene is re-inked with the page.</p>
+        </div>
+        <div class="trace full">
+          <figure class="plate plate--trace">
+            <canvas id="trace" width="640" height="400" tabindex="0" aria-label="A ray-traced scene: three spheres on ruled paper. Drag to move the light, or use the arrow keys."></canvas>
+            <figcaption id="trace-stats">JavaScript is off, so the plate stays blank. With it on, a ray tracer draws the scene here, top to bottom.</figcaption>
+          </figure>
+          <div class="brow">
+            <span class="blabel">Light</span>
+            <div class="bactions trace-opts">
+              <label><input type="checkbox" id="trace-shadows" checked> shadows</label>
+              <label><input type="checkbox" id="trace-reflect" checked> reflections</label>
+              <label><input type="checkbox" id="trace-spot"> spotlight cone</label>
+              <button type="button" id="trace-redraw">draw again</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Experience -->
@@ -384,7 +465,7 @@
     <details>
       <summary>Stylesheets · 2 files</summary>
       <ul class="files">
-            <li data-file="css/site.css"><span>css/site.css</span><span class="hash">495a0a2bfa0e…ae6455</span></li>
+            <li data-file="css/site.css"><span>css/site.css</span><span class="hash">7e8644bdacf3…1ab27b</span></li>
             <li data-file="css/resume.css"><span>css/resume.css</span><span class="hash">2b8cf59d5461…d19512</span></li>
       </ul>
     </details>
@@ -425,12 +506,13 @@
   </li>
   <li data-group="js">
     <details>
-      <summary>Scripts · 4 files</summary>
+      <summary>Scripts · 5 files</summary>
       <ul class="files">
             <li data-file="js/audit.js"><span>js/audit.js</span><span class="hash">e5ebf6865c73…c30b7d</span></li>
             <li data-file="js/bench.js"><span>js/bench.js</span><span class="hash">3b577eb64d10…98caeb</span></li>
             <li data-file="js/nav.js"><span>js/nav.js</span><span class="hash">7d85561eed4b…67c430</span></li>
             <li data-file="js/theme.js"><span>js/theme.js</span><span class="hash">940d3b45b4ff…6f9442</span></li>
+            <li data-file="js/trace.js"><span>js/trace.js</span><span class="hash">2e6412f85cac…e1a034</span></li>
       </ul>
     </details>
     <span class="audit-status">pinned</span>
@@ -452,14 +534,15 @@
       </div>
       <p class="col-foot">Hand-written HTML, CSS and JavaScript. No framework, no analytics, no cookies. The night theme remembers itself in your browser and nowhere else. Set in Source Serif 4, IBM Plex Sans and IBM Plex Mono.</p>
       <!-- CONFIRM: the revision note is a true story. Keep it or cut it -->
-      <p class="col-foot">Revision 3, September 2026. Rebuilt by hand after two friends said the last one looked machine-made. This revision added the bench and the night theme.</p>
+      <p class="col-foot">Revision 3, September 2026. Rebuilt by hand after two friends said the last one looked machine-made. This revision added the bench, the ray tracer, the code receipts under Capstone GPT, and the night theme.</p>
       <p class="col-foot"><a href="https://github.com/zariffidachowdhury/zariffidachowdhury.github.io">Source <span aria-hidden="true">↗</span></a><span class="sep" aria-hidden="true">·</span><a href="https://github.com/zariffidachowdhury/zariffidachowdhury.github.io/blob/main/tools/integrity.py">integrity.py <span aria-hidden="true">↗</span></a><span class="sep" aria-hidden="true">·</span>© 2026 Zarif Fida Chowdhury</p>
     </div>
   </footer>
 
-  <script type="application/json" id="integrity-manifest">{"css/resume.css":"2b8cf59d5461e6700ae7450199f5c19b3507df9da3a31180200d27dc16d19512","css/site.css":"495a0a2bfa0ea1055e58f11b54445f42492731dc0401bde7cb0e05ad55ae6455","fonts/IBMPlexMono-Italic.woff2":"0840095faae86403735a8c04014b72cb29e7923646b222b360b7e8252932e4e3","fonts/IBMPlexMono-Medium.woff2":"01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22","fonts/IBMPlexMono-Regular.woff2":"08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7","fonts/IBMPlexSans-Variable-Italic.woff2":"4363757d2695c7633f98472855849f7c30528eba869d7968ee35b58c87cf14c1","fonts/IBMPlexSans-Variable.woff2":"e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470","fonts/SourceSerif4-Variable-Italic.woff2":"96e6393209728ab93c334ae739af8a040cd2006c82e8614d6465a8084db88f89","fonts/SourceSerif4-Variable.woff2":"f2ea9c12d2fe9bd3a9589b02ad2c0909da88f30938c91adc838c4f4098f9f9e0","fonts/fonts.css":"d8f85ef2a6c1f43d5f604a75baa9fa7ba27b39d11472e8a08202db19555ce4ea","img/apple-touch-icon.png":"338493057909e15769049db1bf2d70f278daa191e6bff9656e429b1d20dc9065","img/capstone-chat-800.jpg":"9c3f324297132e1400beec01e62a595d5f0eaea04be745244789c74b3100e33a","img/capstone-chat.jpg":"305c4e89c47f3be19a3953542e750a0e1b77ca0d3fd5e8f3b39c5a3b1cf7a663","img/capstone-dashboard-800.jpg":"05ff0324e42f7c1cc876cb56f98174e10c99bd48398081a75e215014355d4350","img/capstone-dashboard.jpg":"4c6d1e06c79ebbe8bb21148583d9d578bb7518d5e0f5eab2dfc0ec4c86c12884","img/favicon-32.png":"523322dd23ac1cf569515d10802ad4bd4b24a0c265780c6c7f8c9b814b461348","img/favicon.svg":"5ae76d2818390198a7c77c983fed9c3525c7ea72313fe4a0acaee24935f54802","img/headshot.jpg":"17c830d10930e27072d01946438caee9a21f072e67a0cb95b1855fc566ffa0d1","img/og.png":"bc2267f8449767bbfebd56895d254af9704f3eae7b827a0fa9eb3ed6f2140771","js/audit.js":"e5ebf6865c7332d56488a11288922e092a647e8dff9972389c1abf575cc30b7d","js/bench.js":"3b577eb64d10479d01e6b07c57f611ecd872ac7da031aa87ebd7bd041b98caeb","js/nav.js":"7d85561eed4b5347a3733e00545639fd4f3c68d4b6b06bbfad02af26de67c430","js/theme.js":"940d3b45b4ff69b74d69b9b6408a055a507f0f262d8df8c05b1368e88e6f9442","resume.html":"aa6355ed5f4fc101e4aa2a9c02a135ba963396c5d7ae89dcc2a2a1ff302e94ee","resume.pdf":"3720ee4a687af2c86893b1ebd270530c86b6711b46a69daa94082f20758281cb"}</script>
+  <script type="application/json" id="integrity-manifest">{"css/resume.css":"2b8cf59d5461e6700ae7450199f5c19b3507df9da3a31180200d27dc16d19512","css/site.css":"7e8644bdacf3c9e7533163d5ff977f3b2b759fa170397b4f92413339df1ab27b","fonts/IBMPlexMono-Italic.woff2":"0840095faae86403735a8c04014b72cb29e7923646b222b360b7e8252932e4e3","fonts/IBMPlexMono-Medium.woff2":"01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22","fonts/IBMPlexMono-Regular.woff2":"08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7","fonts/IBMPlexSans-Variable-Italic.woff2":"4363757d2695c7633f98472855849f7c30528eba869d7968ee35b58c87cf14c1","fonts/IBMPlexSans-Variable.woff2":"e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470","fonts/SourceSerif4-Variable-Italic.woff2":"96e6393209728ab93c334ae739af8a040cd2006c82e8614d6465a8084db88f89","fonts/SourceSerif4-Variable.woff2":"f2ea9c12d2fe9bd3a9589b02ad2c0909da88f30938c91adc838c4f4098f9f9e0","fonts/fonts.css":"d8f85ef2a6c1f43d5f604a75baa9fa7ba27b39d11472e8a08202db19555ce4ea","img/apple-touch-icon.png":"338493057909e15769049db1bf2d70f278daa191e6bff9656e429b1d20dc9065","img/capstone-chat-800.jpg":"9c3f324297132e1400beec01e62a595d5f0eaea04be745244789c74b3100e33a","img/capstone-chat.jpg":"305c4e89c47f3be19a3953542e750a0e1b77ca0d3fd5e8f3b39c5a3b1cf7a663","img/capstone-dashboard-800.jpg":"05ff0324e42f7c1cc876cb56f98174e10c99bd48398081a75e215014355d4350","img/capstone-dashboard.jpg":"4c6d1e06c79ebbe8bb21148583d9d578bb7518d5e0f5eab2dfc0ec4c86c12884","img/favicon-32.png":"523322dd23ac1cf569515d10802ad4bd4b24a0c265780c6c7f8c9b814b461348","img/favicon.svg":"5ae76d2818390198a7c77c983fed9c3525c7ea72313fe4a0acaee24935f54802","img/headshot.jpg":"17c830d10930e27072d01946438caee9a21f072e67a0cb95b1855fc566ffa0d1","img/og.png":"bc2267f8449767bbfebd56895d254af9704f3eae7b827a0fa9eb3ed6f2140771","js/audit.js":"e5ebf6865c7332d56488a11288922e092a647e8dff9972389c1abf575cc30b7d","js/bench.js":"3b577eb64d10479d01e6b07c57f611ecd872ac7da031aa87ebd7bd041b98caeb","js/nav.js":"7d85561eed4b5347a3733e00545639fd4f3c68d4b6b06bbfad02af26de67c430","js/theme.js":"940d3b45b4ff69b74d69b9b6408a055a507f0f262d8df8c05b1368e88e6f9442","js/trace.js":"2e6412f85cac725d0045ddaf93bbf54c6afc8d25bdd9adc6cfa8ecebbde1a034","resume.html":"aa6355ed5f4fc101e4aa2a9c02a135ba963396c5d7ae89dcc2a2a1ff302e94ee","resume.pdf":"3720ee4a687af2c86893b1ebd270530c86b6711b46a69daa94082f20758281cb"}</script>
   <script src="js/audit.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/bench.js" defer></script>
+  <script src="js/trace.js" defer></script>
 </body>
 </html>

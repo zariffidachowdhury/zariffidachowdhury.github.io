@@ -25,4 +25,6 @@ This is the source of https://zariffidachowdhury.github.io/ (GitHub Pages, user 
 - `js/bench.js` the Feistel bench (demo round function, swap in the real ZFC one if wanted)
 - `js/nav.js` day/night toggle, current-section marking, j/k keys, copy email
 - `js/theme.js` applies a saved theme before first paint, loaded in the head
+- `js/trace.js` the ray tracer plate (reads the palette from CSS variables, so it re-inks at night)
 - `tools/integrity.py` writes the pinned hashes into `index.html`
+- `tools/receipts.py` rebuilds the code excerpts under the Capstone GPT facts from a clone of capstone-gpt (`python3 tools/receipts.py ../../capstone-gpt`). Never hand-edit the block between the receipts markers in `index.html`
