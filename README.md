@@ -8,7 +8,7 @@ Hand-written HTML, CSS and a little JavaScript. No framework, no analytics, no c
 
 The page has a bench: a 64-bit Feistel network (the structure ZFC-Cipher, my CYB 236 block cipher, is built on) that runs in the browser. Type a block and a key, flip any bit, and the round table shows the change spreading. The round function and key schedule in `js/bench.js` are simple demo ones, not the ZFC ones. Below it, a ray tracer draws three spheres on ruled paper into a canvas, scanline by scanline, with a light you can drag. Under Capstone GPT, every claim unfolds to the lines of the public repo that show it, pulled from a local clone by `tools/receipts.py` so they cannot drift from the code. Under the CYB 334 coursework line, a hand-drawn SVG maps the lab network: one pfSense firewall in the middle, a LAN and a DMZ below it, and the rule the design turns on drawn in oxblood, the DMZ cannot open a connection back into the LAN. There is also a day/night theme that follows the system setting until you pick one, a masthead that marks the section you are in, and j/k to move between sections.
 
-The page also checks itself: `tools/integrity.py` pins a SHA-256 hash of every file the page loads into `index.html`, and `js/audit.js` re-hashes each file in the visitor's browser and reports the result in the colophon.
+The page also checks itself: `tools/integrity.py` pins a SHA-256 hash of every file the page loads into `index.html` and stamps the stylesheet and script tags with Subresource Integrity attributes, so the browser refuses a file that does not match. `js/audit.js` then re-hashes every file in the visitor's browser and reports the result in the colophon.
 
 | Path | What it is |
 |---|---|
@@ -23,7 +23,8 @@ The page also checks itself: `tools/integrity.py` pins a SHA-256 hash of every f
 | `js/trace.js` | The ray tracer: three spheres on ruled paper, Phong, shadows, one bounce, spotlight cone, draggable light |
 | `js/theme.js` | Six lines that apply a saved theme choice before first paint |
 | `tools/integrity.py` | Writes the manifest and the integrity ledger into `index.html`. Run it after changing any file |
-| `tools/receipts.py` | Rebuilds the code excerpts under the Capstone GPT facts from a local clone of capstone-gpt, with the line links pinned to that clone's commit |
+| `tools/receipts.py` | Rebuilds the code excerpts under both Selected work entries from local clones of capstone-gpt and secure-rag-guardrails, with the line links pinned to each clone's commit |
+| `tools/check.py` | The pre-commit check: pins and SRI current, prose free of em dashes and semicolons, nothing the CSP forbids, PDF one page, links resolve, receipts fresh. GitHub Actions runs it on every push |
 | `fonts/` | Source Serif 4, IBM Plex Sans and IBM Plex Mono (latin subsets, WOFF2), `fonts.css`, and the licenses |
 | `img/` | Headshot, Capstone GPT screenshots, Open Graph card, favicons |
 | `robots.txt`, `sitemap.xml`, `.nojekyll` | Crawl hints. `.nojekyll` tells Pages to publish the files exactly as committed |
@@ -33,7 +34,8 @@ Deployment is GitHub Pages from the `main` branch, root directory. Pushing to `m
 ## After changing any file
 
 ```bash
-python3 tools/integrity.py   # re-pin the hashes, then commit index.html with the change
+python3 tools/integrity.py   # re-pin the hashes and SRI attributes
+python3 tools/check.py       # one command that says whether it is fit to commit
 ```
 
 If you forget, the site still works. The colophon will just report which file differs from what was pinned.

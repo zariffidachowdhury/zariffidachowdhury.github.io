@@ -9,12 +9,18 @@ It rewrites two things in index.html:
   * the JSON manifest in <script type="application/json" id="integrity-manifest">
   * the rows between <!-- integrity:start --> and <!-- integrity:end -->
 
+and, in index.html, resume.html and 404.html, it stamps every stylesheet and
+script tag with a Subresource Integrity attribute (integrity="sha256-...") and
+a ?v= cache key from the same hash, so the browser refuses a file that does
+not match and never pairs a new page with a stale cached copy.
+
 js/audit.js reads the manifest in the visitor's browser, re-hashes each file
 with SubtleCrypto, and reports matches in the colophon. No build tools, no
 dependencies, standard library only.
 """
 from __future__ import annotations
 
+import base64
 import hashlib
 import html
 import json
@@ -24,6 +30,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 INDEX = ROOT / "index.html"
+PAGES = ["index.html", "resume.html", "404.html"]   # pages whose <link> and <script> tags get SRI
 
 # What the page loads, grouped for the ledger. Order here is display order.
 GROUPS = [
@@ -45,7 +52,40 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+TAG = re.compile(r'<(link|script)\b([^>]*?)\s(href|src)="(/?)([^"?#]+)(?:\?v=[0-9a-f]+)?"([^>]*)>')
+
+
+def stamp_sri(page: Path, manifest: dict) -> int:
+    """Add integrity= and ?v= to every stylesheet and script tag whose file is pinned."""
+    text = page.read_text(encoding="utf-8")
+    count = 0
+
+    def fix(m: re.Match) -> str:
+        nonlocal count
+        tag, before, attr, slash, path, after = m.groups()
+        if path not in manifest:
+            return m.group(0)
+        if tag == "link" and 'rel="stylesheet"' not in (before + after):
+            return m.group(0)
+        digest = manifest[path]
+        sri = "sha256-" + base64.b64encode(bytes.fromhex(digest)).decode()
+        before = re.sub(r'\s*integrity="[^"]*"', "", before)
+        after = re.sub(r'\s*integrity="[^"]*"', "", after)
+        count += 1
+        return f'<{tag}{before} {attr}="{slash}{path}?v={digest[:8]}"{after} integrity="{sri}">'
+
+    new = TAG.sub(fix, text)
+    if new != text:
+        page.write_text(new, encoding="utf-8")
+    return count
+
+
 def main() -> int:
+    # Stamp SRI first: the attributes depend only on stylesheet and script hashes,
+    # and stamping changes resume.html, which is itself pinned below.
+    resources = {f: sha256(ROOT / f) for _, _, files in GROUPS for f in files if (ROOT / f).is_file()}
+    stamped = {name: stamp_sri(ROOT / name, resources) for name in PAGES if (ROOT / name).is_file()}
+
     manifest: dict[str, str] = {}
     rows: list[str] = []
     for key, label, files in GROUPS:
@@ -91,7 +131,7 @@ def main() -> int:
         print("index.html is missing the integrity markers or manifest block", file=sys.stderr)
         return 1
     INDEX.write_text(src, encoding="utf-8")
-    print(f"pinned {len(manifest)} files into index.html")
+    print(f"pinned {len(manifest)} files into index.html, SRI on " + ", ".join(f"{n} ({c})" for n, c in stamped.items()))
     return 0
 
 

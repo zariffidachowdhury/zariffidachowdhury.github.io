@@ -13,8 +13,8 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/SourceSerif4-Variable.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/IBMPlexSans-Variable.woff2">
-  <link rel="stylesheet" href="fonts/fonts.css">
-  <link rel="stylesheet" href="css/resume.css">
+  <link rel="stylesheet" href="fonts/fonts.css?v=d8f85ef2" integrity="sha256-2Phe8qbB9D1fYEp1uqn6e6J7OdEUcuigggLbGVVc5Oo=">
+  <link rel="stylesheet" href="css/resume.css?v=411386a0" integrity="sha256-QROGoJvtHqdIthgFWRlBBxApfanD1A7ykbx7IWctogI=">
   <!-- resume.pdf is this page printed: Playwright Chromium, media=print, Letter, backgrounds on, CSS @page size. -->
 </head>
 <body>
@@ -54,6 +54,25 @@
           <li>Ten REST routes across seven PHP endpoints over a normalized five-table MySQL schema: conversation logs, feedback capture, instructor analytics, CSV export.</li>
         </ul>
       </article>
+      <article class="entry">
+        <div class="row">
+          <h3>secure-rag-guardrails <span class="org">open source<span class="sep" aria-hidden="true">·</span><a class="mono" href="https://github.com/zariffidachowdhury/secure-rag-guardrails">github.com/zariffidachowdhury/secure-rag-guardrails</a></span></h3>
+          <span class="date">Jun 2026</span>
+        </div>
+        <ul>
+          <li>Input gate, retrieved-context fence, and output redaction for LLM apps, mapped to the OWASP Top 10 for LLMs. One file of standard-library Python, 13 tests in CI, every decision returns the rules that fired.</li>
+        </ul>
+      </article>
+      <article class="entry">
+        <div class="row">
+          <h3>zariffidachowdhury.github.io <span class="org">personal site<span class="sep" aria-hidden="true">·</span><a class="mono" href="https://github.com/zariffidachowdhury/zariffidachowdhury.github.io">source on GitHub</a></span></h3>
+          <span class="date">Sep 2026</span>
+        </div>
+        <ul>
+          <li>Hand-written HTML, CSS and JavaScript under a strict Content Security Policy. Every file's SHA-256 is pinned in the page, enforced through Subresource Integrity and re-checked in the visitor's browser.</li>
+          <li>In-browser Feistel network visualizer and ray tracer in plain JavaScript. Project claims unfold to the exact source lines, pulled from the repos by a build script.</li>
+        </ul>
+      </article>
     </section>
 
     <section aria-labelledby="h-experience">
@@ -65,9 +84,7 @@
           <span class="date">Oct 2025 - present</span>
         </div>
         <ul>
-          <li>The department's face at open houses of 200+ guests each semester. Coordinate event logistics.</li>
-          <li>Lead breakout sessions and Q&amp;A panels on the CS curriculum and research opportunities.</li>
-          <li>Mentor admitted students on course selection and student organizations.</li>
+          <li>The department's face at open houses of 200+ guests each semester: event logistics, breakout sessions and Q&amp;A panels on the curriculum, and course-selection mentoring for admitted students.</li>
         </ul>
       </article>
 
@@ -77,8 +94,7 @@
           <span class="date">Jun - Aug 2024</span>
         </div>
         <ul>
-          <li>Researched SIEM systems and presented findings to the security-monitoring team.</li>
-          <li>Trained on enterprise networking: port forwarding and network device configuration.</li>
+          <li>Researched SIEM systems and presented findings to the security-monitoring team. Enterprise networking: port forwarding and device configuration.</li>
           <li>Completed Cisco Linux Essentials: Linux administration and command-line work.</li>
         </ul>
       </article>
@@ -89,8 +105,7 @@
           <span class="date">Jun - Aug 2023</span>
         </div>
         <ul>
-          <li>Built modular Python backend prototypes for internal data-processing tools.</li>
-          <li>Designed PostgreSQL schemas and indexing strategies that improved query performance by 15%.</li>
+          <li>Built modular Python backend prototypes for internal data-processing tools. Designed PostgreSQL schemas and indexing that improved query performance by 15%.</li>
           <li>Worked in an Agile team: daily stand-ups, code review, presenting solutions to stakeholders.</li>
         </ul>
       </article>
@@ -109,7 +124,7 @@
         </div>
         <div>
           <dt>CYB 334</dt>
-          <dd><b>Network Security.</b> pfSense firewall (LAN/WAN/DMZ rules, split DNS), IPsec/IKEv2 VPN, and a Snort, Kiwi Syslog and Splunk monitoring pipeline. Metasploitable 2 exploitation. SSH log forensics, AES decryption, certificate inspection.</dd>
+          <dd><b>Network Security.</b> pfSense firewall (LAN/WAN/DMZ rules, split DNS), IPsec/IKEv2 VPN, Snort, Kiwi Syslog and Splunk monitoring pipeline. Metasploitable 2 exploitation, SSH log forensics, AES decryption.</dd>
         </div>
         <div>
           <dt>CYB 331</dt>
@@ -125,7 +140,7 @@
           <h3>Miami University <span class="org">B.S. Computer Science, Oxford, OH</span></h3>
           <span class="date">Expected September 2026</span>
         </div>
-        <p>Additional coursework: Computer Networks, Database Systems, Systems I &amp; II, Algorithms, Machine Learning.</p>
+        <p>Additional coursework: Computer Networks, Database Systems, Systems I &amp; II, Algorithms, Machine Learning. Cybersecurity Club member since 2022. Cisco Linux Essentials (2024). CompTIA Security+ and AWS Solutions Architect Associate in progress.</p>
       </article>
     </section>
 
@@ -134,21 +149,10 @@
       <dl class="skills">
         <div><dt>Languages</dt><dd>Python, Java, C++, C, PHP, JavaScript, SQL</dd></div>
         <div><dt>Security</dt><dd>OWASP Top 10, threat modeling, Burp Suite, Wireshark, tcpdump, Nmap, Metasploit, OpenSSL, Kali Linux, pfSense, Snort, Splunk</dd></div>
-        <div><dt>Systems &amp; cloud</dt><dd>Linux and Bash, Docker, AWS, Git, GitLab, MySQL, PostgreSQL, REST</dd></div>
-        <div><dt>AI</dt><dd>Retrieval-augmented generation, Dify, LLM API integration</dd></div>
-        <div><dt>Certifications</dt><dd>Cisco Linux Essentials (2024)<span class="sep" aria-hidden="true">·</span>CompTIA Security+ and AWS SAA, in progress</dd></div>
+        <div><dt>Systems &amp; AI</dt><dd>Linux and Bash, Docker, AWS, Git, GitLab, MySQL, PostgreSQL, REST, RAG, Dify, LLM APIs</dd></div>
       </dl>
     </section>
 
-    <section aria-labelledby="h-activities">
-      <h2 id="h-activities">Activities</h2>
-      <article class="entry">
-        <div class="row">
-          <h3>Cybersecurity Club <span class="org">Miami University, member</span></h3>
-          <span class="date">Sep 2022 - present</span>
-        </div>
-      </article>
-    </section>
 
   </main>
 </body>

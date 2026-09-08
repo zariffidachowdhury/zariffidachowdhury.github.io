@@ -19,12 +19,12 @@
   --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Fit knobs. Tighten in this order if the PDF spills: leading, section gap, page margin. */
-  --fs:      10pt;     /* body */
-  --lh:      1.2;      /* body leading */
+  --fs:      9.7pt;    /* body */
+  --lh:      1.15;     /* body leading */
   --fs-mono: 8.5pt;    /* eyebrows, dates, contact line */
-  --gap-section: 6pt;  /* between sections */
+  --gap-section: 5pt;  /* between sections */
   --gap-entry:   3pt;  /* between roles inside a section */
-  --page-margin-v: 0.55in;
+  --page-margin-v: 0.5in;
   --page-margin-h: 0.6in;
 
   color-scheme: light;
@@ -32,7 +32,7 @@
 
 @page {
   size: Letter;
-  margin: 0.55in 0.6in;
+  margin: 0.5in 0.6in;
 }
 
 * { box-sizing: border-box; }

@@ -112,7 +112,7 @@
   if (foot && sections.length) {
     var hint = document.createElement("p");
     hint.className = "col-foot";
-    hint.textContent = "Keyboard: j and k move between sections.";
+    hint.textContent = "Keyboard: j and k move between sections. Cmd+K or Ctrl+K opens the jump list.";
     foot.parentNode.insertBefore(hint, foot);
   }
 

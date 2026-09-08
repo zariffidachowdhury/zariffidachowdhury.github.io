@@ -345,6 +345,30 @@ h1, h2, h3 { margin: 0; font-weight: 580; }
   margin: 0 0 36px;
 }
 
+/* a second entry in the same ledger: date in the margin, article in the content column */
+.entry-date { margin-top: 72px; font-variant-numeric: tabular-nums; }
+@media (min-width: 900px) {
+  .ledger-grid > .col2 { grid-column: 2; margin-top: 72px; }
+}
+@media (max-width: 899px) {
+  .entry-date { margin-top: 56px; margin-bottom: -8px; }
+}
+
+/* a text plate: a terminal transcript framed like the screenshots */
+.plate--text { margin: 0 0 36px; }
+.plate--text pre {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--rule-2);
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+
 /* plates: the only framed objects on the page */
 .plates {
   display: grid;
@@ -772,6 +796,77 @@ button.bit:hover { border-color: var(--ox); box-shadow: 0 0 0 1px var(--ox); }
 }
 .trace-opts input[type="checkbox"] { accent-color: var(--ox); width: 14px; height: 14px; margin: 0; }
 .trace-opts button::before { content: "↺ "; color: var(--ink-2); }
+
+/* ---------- the jump list (Cmd+K), built by js/palette.js ---------- */
+.palette-open {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  line-height: inherit;
+}
+.palette-open::after { content: " ⌘K"; color: var(--ink-2); font-size: 11px; }
+.palette-open:hover { color: var(--ox); text-decoration: underline; text-decoration-thickness: 1px; }
+
+dialog.palette {
+  width: min(560px, 92vw);
+  margin: 12vh auto 0;
+  padding: 0;
+  border: 1px solid var(--ink);
+  background: var(--paper-2);
+  color: var(--ink);
+  border-radius: 0;
+}
+dialog.palette::backdrop { background: rgba(25, 27, 31, 0.45); }
+.palette-form { margin: 0; }
+.palette-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--mono);
+  font-size: 15.5px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 16px;
+  outline: none;
+}
+.palette-input::placeholder { color: var(--ink-2); }
+.palette-list { max-height: min(52vh, 420px); overflow-y: auto; margin: 0; padding: 6px 0; }
+.palette-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 16px;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.palette-list li.is-active { background: var(--ox-tint); }
+.palette-list li.is-active .palette-label { color: var(--ox); }
+.palette-hint { color: var(--ink-2); font-size: 12px; white-space: nowrap; }
+.palette-none { color: var(--ink-2); cursor: default; }
+.palette-status {
+  margin: 0;
+  padding: 8px 16px 10px;
+  border-top: 1px solid var(--rule-2);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+@media (max-width: 520px) {
+  .palette-open::after { content: ""; }
+  dialog.palette { margin-top: 6vh; }
+}
+
+.page-note { margin-top: 28px; }
+@media (min-width: 900px) { .ledger-grid > .page-note { margin-top: 28px; } }
 
 /* copy button next to the email address, added by js/nav.js */
 .copy { margin-left: 10px; padding: 2px 8px; font-size: 12px; vertical-align: 1px; }
