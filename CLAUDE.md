@@ -19,6 +19,7 @@ This is the source of https://zariffidachowdhury.github.io/ (GitHub Pages, user 
 ## Layout
 
 - `index.html` all page copy, sections are commented
+- The CYB 334 coursework row folds open onto a hand-authored inline SVG (`.netmap`), styled in `css/site.css`. No JS, no image file. Edit the coordinates in place if the topology changes
 - `css/site.css` tokens at the top in `:root`
 - `resume.html` and `css/resume.css` the résumé
 - `js/audit.js` re-hashes the pinned files in the visitor's browser

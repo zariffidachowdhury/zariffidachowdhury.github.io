@@ -6,7 +6,7 @@ Source for my personal site and résumé, served by GitHub Pages at <https://zar
 
 Hand-written HTML, CSS and a little JavaScript. No framework, no analytics, no cookies, and no requests to other hosts: the three typefaces are self-hosted from `fonts/`. A strict Content-Security-Policy (set in a `<meta>` tag, since GitHub Pages can't send headers) allows nothing but this origin: no inline script, no inline style.
 
-The page has a bench: a 64-bit Feistel network (the structure ZFC-Cipher, my CYB 236 block cipher, is built on) that runs in the browser. Type a block and a key, flip any bit, and the round table shows the change spreading. The round function and key schedule in `js/bench.js` are simple demo ones, not the ZFC ones. Below it, a ray tracer draws three spheres on ruled paper into a canvas, scanline by scanline, with a light you can drag. Under Capstone GPT, every claim unfolds to the lines of the public repo that show it, pulled from a local clone by `tools/receipts.py` so they cannot drift from the code. There is also a day/night theme that follows the system setting until you pick one, a masthead that marks the section you are in, and j/k to move between sections.
+The page has a bench: a 64-bit Feistel network (the structure ZFC-Cipher, my CYB 236 block cipher, is built on) that runs in the browser. Type a block and a key, flip any bit, and the round table shows the change spreading. The round function and key schedule in `js/bench.js` are simple demo ones, not the ZFC ones. Below it, a ray tracer draws three spheres on ruled paper into a canvas, scanline by scanline, with a light you can drag. Under Capstone GPT, every claim unfolds to the lines of the public repo that show it, pulled from a local clone by `tools/receipts.py` so they cannot drift from the code. Under the CYB 334 coursework line, a hand-drawn SVG maps the lab network: one pfSense firewall in the middle, a LAN and a DMZ below it, and the rule the design turns on drawn in oxblood, the DMZ cannot open a connection back into the LAN. There is also a day/night theme that follows the system setting until you pick one, a masthead that marks the section you are in, and j/k to move between sections.
 
 The page also checks itself: `tools/integrity.py` pins a SHA-256 hash of every file the page loads into `index.html`, and `js/audit.js` re-hashes each file in the visitor's browser and reports the result in the colophon.
 
@@ -72,7 +72,7 @@ Check that it is still one page before committing (`pdfinfo resume.pdf | grep Pa
 
 ## Fonts and licenses
 
-Source Serif 4 (Adobe), IBM Plex Sans and IBM Plex Mono (IBM) are all under the SIL Open Font License 1.1. The license texts are in `fonts/LICENSE-SourceSerif4.txt` and `fonts/LICENSE-IBMPlex.txt`; `fonts/fonts.css` declares the faces.
+Source Serif 4 (Adobe), IBM Plex Sans and IBM Plex Mono (IBM) are all under the SIL Open Font License 1.1. The license texts are in `fonts/LICENSE-SourceSerif4.txt` and `fonts/LICENSE-IBMPlex.txt`. The `fonts/fonts.css` file declares the faces.
 
 ## Copyright
 

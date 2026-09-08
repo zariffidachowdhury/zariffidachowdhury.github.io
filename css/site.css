@@ -460,6 +460,41 @@ h1, h2, h3 { margin: 0; font-weight: 580; }
 /* sub-blocks inside a section (e.g. coursework under Selected work) */
 .subsection { margin-top: 72px; }
 
+/* a fold that opens onto a hand-drawn diagram (the CYB 334 network map) */
+.diagram-fold { margin-top: 12px; }
+.diagram-fold > summary {
+  cursor: pointer;
+  list-style: none;
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  width: max-content;
+  max-width: 100%;
+}
+.diagram-fold > summary::-webkit-details-marker { display: none; }
+.diagram-fold > summary::before { content: "+ "; }
+.diagram-fold[open] > summary::before { content: "− "; }
+.diagram-fold > summary:hover { color: var(--ox); }
+
+.netmap-fig { margin: 16px 0 4px; }
+.netmap { display: block; width: 100%; height: auto; max-width: 580px; color: var(--ink); }
+.netmap .box { fill: var(--paper-2); stroke: currentColor; stroke-width: 1.5; }
+.netmap .box.hub { stroke-width: 2.5; }
+.netmap text { fill: currentColor; font-family: var(--mono); }
+.netmap .cap, .netmap .lbl { fill: var(--ink-2); }
+.netmap .flow { fill: none; stroke: currentColor; stroke-width: 1.5; }
+.netmap .danger { color: var(--ox); }
+.netmap .danger.flow { stroke: currentColor; }
+.netmap-fig figcaption {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-2);
+  line-height: 1.65;
+  max-width: 62ch;
+  margin-top: 12px;
+}
+
 /* rows: date/code in the margin column, content in the content column */
 .rows { border-top: 1px solid var(--rule-2); }
 .row {
