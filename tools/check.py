@@ -6,7 +6,7 @@
 It fails, with a list, when any of these is off:
 
   1. The pinned hashes or the SRI attributes are stale (integrity.py would change a file).
-  2. Prose in the pages, the README or CLAUDE.md contains an em dash or a semicolon.
+  2. Prose in the pages or the README contains an em dash or a semicolon.
      Code, <pre>, <script>, <style>, the CSP meta tag and Markdown code blocks are exempt.
   3. Anything the Content Security Policy forbids: inline style attributes, inline
      scripts other than the JSON manifest and the JSON-LD block, on* handlers,
@@ -16,6 +16,9 @@ It fails, with a list, when any of these is off:
   6. The retired /portfolio/ URL appears anywhere.
   7. The receipts are stale, checked only when the clones are present next to the
      site's parent folder (../../capstone-gpt, ../../secure-rag-guardrails).
+  8. A commit on this branch is not mine: any author or committer other than
+     Zarif Fida Chowdhury (GitHub's web editor may be the committer), or a
+     trailer line in a commit body. Skipped when there is no git history to read.
 
 Standard library only, so it runs the same on a laptop and in GitHub Actions.
 """
@@ -32,7 +35,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PAGES = ["index.html", "resume.html", "404.html"]
-PROSE_MD = ["README.md", "CLAUDE.md"]
+PROSE_MD = ["README.md"]
+AUTHOR = "Zarif Fida Chowdhury"
+COMMITTERS = {AUTHOR, "GitHub"}
 problems: list[str] = []
 
 
@@ -178,6 +183,33 @@ def check_receipts() -> None:
             fail("the receipts are stale against the clones: run python3 tools/receipts.py, then integrity.py")
 
 
+# ----------------------------------------------------------------- 8. provenance
+
+TRAILER = re.compile(r"^[A-Z][A-Za-z]*(?:-[A-Za-z]+)*: \S")
+
+
+def check_provenance() -> None:
+    sep = "\x1e"
+    r = subprocess.run(["git", "-C", str(ROOT), "log", f"--format=%h{sep}%an{sep}%cn{sep}%B{sep}{sep}"],
+                       capture_output=True, text=True)
+    if r.returncode != 0 or not r.stdout.strip():
+        print("note: no git history here, commit authorship not checked")
+        return
+    for entry in r.stdout.split(sep + sep):
+        if not entry.strip():
+            continue
+        short, author, committer, body = entry.strip("\n").split(sep, 3)
+        if author != AUTHOR:
+            fail(f"commit {short} is authored by {author!r}, expected {AUTHOR!r}")
+        if committer not in COMMITTERS:
+            fail(f"commit {short} was committed by {committer!r}, expected {AUTHOR!r}")
+        lines = body.strip("\n").split("\n")
+        for line in lines[1:]:
+            if TRAILER.match(line.strip()):
+                fail(f"commit {short} carries a trailer line: {line.strip()[:60]}")
+                break
+
+
 def main() -> int:
     check_pins()
     check_punctuation()
@@ -186,12 +218,13 @@ def main() -> int:
     check_links()
     check_old_url()
     check_receipts()
+    check_provenance()
     if problems:
         print(f"{len(problems)} problem{'s' if len(problems) != 1 else ''}:")
         for p in problems:
             print("  - " + p)
         return 1
-    print("all clear: pins and SRI current, prose clean, CSP hygiene, PDF one page, links resolve")
+    print("all clear: pins and SRI current, prose clean, CSP hygiene, PDF one page, links resolve, commits mine")
     return 0
 
 

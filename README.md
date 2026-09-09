@@ -24,7 +24,7 @@ The page also checks itself: `tools/integrity.py` pins a SHA-256 hash of every f
 | `js/theme.js` | Six lines that apply a saved theme choice before first paint |
 | `tools/integrity.py` | Writes the manifest and the integrity ledger into `index.html`. Run it after changing any file |
 | `tools/receipts.py` | Rebuilds the code excerpts under both Selected work entries from local clones of capstone-gpt and secure-rag-guardrails, with the line links pinned to each clone's commit |
-| `tools/check.py` | The pre-commit check: pins and SRI current, prose free of em dashes and semicolons, nothing the CSP forbids, PDF one page, links resolve, receipts fresh. GitHub Actions runs it on every push |
+| `tools/check.py` | The pre-commit check: pins and SRI current, prose free of em dashes and semicolons, nothing the CSP forbids, PDF one page, links resolve, receipts fresh, every commit authored by me. GitHub Actions runs it on every push |
 | `fonts/` | Source Serif 4, IBM Plex Sans and IBM Plex Mono (latin subsets, WOFF2), `fonts.css`, and the licenses |
 | `img/` | Headshot, Capstone GPT screenshots, Open Graph card, favicons |
 | `robots.txt`, `sitemap.xml`, `.nojekyll` | Crawl hints. `.nojekyll` tells Pages to publish the files exactly as committed |
